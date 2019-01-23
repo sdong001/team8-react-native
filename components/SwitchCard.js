@@ -22,17 +22,19 @@ class SwitchCard extends Component {
 	render() {
 		return (
 			<Card>
-				<CardItem style={{backgroundColor: this.props.cardBkgColor}}>
-					<Icon name={this.props.icon} />
-					<Text>{this.props.title}</Text>
+				<CardItem style={{justifyContent:"space-between", backgroundColor: this.props.cardBkgColor}}>
+					<Left>
+						<Icon name={this.props.icon} />
+						<Text>{this.props.title}</Text>
+					</Left>
 					<Right>
-					<Switch value={this.state.toggle}
-						style={{ transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] }}
-						onValueChange={
-							(value) => {
-								this.setState({toggle:value});
-							}
-						} />
+						<Switch value={this.state.toggle}
+							style={{ transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] }}
+							onValueChange={
+								(value) => {
+									this.setState({toggle:value});
+								}
+							} />
 					</Right>
 				</CardItem>
 			</Card>

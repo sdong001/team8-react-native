@@ -18,6 +18,8 @@ class NumbericRadioBtnsView extends Component {
 			});
 		});
 
+		btns[0].btnStyle =  styles.selected;
+
 		this.state = {
 			btns: btns
 		};
