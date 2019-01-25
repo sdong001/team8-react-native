@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { View, Button, Text, Icon, Toast } from 'native-base';
-import { StyleSheet } from 'react-native';
+import { TouchableOpacity, StyleSheet } from 'react-native';
 
 import { vCenterRow } from '../style/common';
 
@@ -21,7 +21,8 @@ class NumbericRadioBtnsView extends Component {
 		btns[0].btnStyle =  styles.selected;
 
 		this.state = {
-			btns: btns
+			btns: btns,
+			curEnableBtnIdx: 0
 		};
 	}
 
@@ -32,30 +33,27 @@ class NumbericRadioBtnsView extends Component {
 	render() {
 		return (
 			<View style={vCenterRow}>
+				<Text>
+					Mode
+				</Text>
 				{this.props.icons.map((item, idx) => (
-					<Button style={this.state.btns[idx].btnStyle} iconLeft transparent dark key={item + idx}
-						onPress={()=> {
-							let curStyle = this.state.btns[idx].btnStyle;
-							let changeBtns = [];
+					<TouchableOpacity onPress={() => {
+						console.log('idx', idx);
+						console.log('this.state.curEnableBtnIdx', this.state.curEnableBtnIdx);
+						if( this.state.curEnableBtnIdx != idx ) {
+							let changeBtns = this.state.btns;
 
-							curStyle = curStyle == styles.selected ? styles.unSelected : styles.selected;
-
-							this.state.btns.map((newItem, changeIdx) => {
-								if( idx == changeIdx ) {
-									newItem.btnStyle = curStyle;
-								} else {
-									newItem.btnStyle = styles.unSelected;
-								}
-								changeBtns.push(newItem);
-							})
+							changeBtns[idx].btnStyle = styles.selected;
+							changeBtns[this.state.curEnableBtnIdx].btnStyle = styles.unSelected;
 
 							this.setState({
-								btns: changeBtns
+								btns: changeBtns,
+								curEnableBtnIdx: idx,
 							});
-						}}>
-						<Icon name='ios-paw' />
-						<Text>{idx}</Text>
-					</Button>
+						}
+					}}>
+						<Text style={this.state.btns[idx].btnStyle}>{idx}</Text>
+					</TouchableOpacity>
 				))}
 			</View>
 		);
@@ -64,10 +62,12 @@ class NumbericRadioBtnsView extends Component {
 
 const styles = StyleSheet.create({
 	unSelected: {
+		margin: 20,
 		opacity: 0.5,
 	},
 
 	selected: {
+		margin: 20,
 		opacity: 1,
 	}
 });

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { AppRegistry, View } from 'react-native';
-import Routes from './Routes.js'
+import Routes from './Routes'
 import {name as appName} from './app.json';
 
 export default class App extends Component {

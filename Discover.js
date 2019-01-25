@@ -31,7 +31,7 @@ const Discover = () => {
 							<Text note numberOfLines={1}>Its time to build a difference . .</Text>
 						</Body>
 						<Right>
-							<Button transparent>
+							<Button transparent onPress={goToHome}>
 								<Text>Connect</Text>
 							</Button>
 						</Right>
