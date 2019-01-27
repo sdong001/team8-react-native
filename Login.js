@@ -4,16 +4,15 @@ import { Actions } from 'react-native-router-flux'
 
 import { Container, Content,
 	Button, Text,
-	Left, Right,
-	Card, CardItem, Icon, Header, View,
+	Card, CardItem, Icon, View,
 	Grid, Col, Row
 } from 'native-base';
 
-var { FBLogin, FBLoginManager } = require('react-native-facebook-login');
+// var { FBLogin, FBLoginManager } = require('react-native-facebook-login');
 // import FacebookLogin from './components/FacebookLogin';
 
-import { vCenterRow, spaceComponent,
-	COLOR_PRIMARY, logo }
+import { flexColumn,
+	COLOR_PRIMARY, LOGO_STYLE }
 from './style/common';
 
 type Props = {};
@@ -33,11 +32,11 @@ const Login = () => {
 				<Grid style={{paddingLeft: 36, paddingRight: 36}}>
 					<Row>
 						<View style={{flex: 1, justifyContent: 'center'}}>
-							<Image style={logo} source={require('./public/image/logo.png')} />
+							<Image style={LOGO_STYLE} source={require('./public/image/logo.png')} />
 						</View>
 					</Row>
 
-					<Row style={{flex: 1, flexDirection: 'column'}}>
+					<Row style={flexColumn}>
 						<Text style={[styles.welcomeText, {fontSize: 22.5, color:'#ffffff'}]}>
 							Login to fully enjoy EIGHT’s features !
 						</Text>

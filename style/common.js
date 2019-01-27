@@ -27,6 +27,7 @@ export const UPDATE_DIALOG_TITLE_TEXT = 'Firmware Update';
 export const FIRMWARE_NEED_UPDATE = 'Need Update!';
 export const FIRMWARE_UPDATE_VER = 'Update Ver.';
 export const FIRMWARE_CURRENT_VER = 'Current Ver.';
+export const FIRMWARE_UPDATE_WAITING = 'Please wait for update. . .';
 
 // Discover
 export const NOT_PAIRED = 'Not Paired Device';
@@ -61,11 +62,12 @@ export const ACCIDENT_SENSITIVITY_LOW = 'LOW';
 export const ACCIDENT_SENSITIVITY_HIGH_DESC = 'It is mainly suitable for the driver who has good road condition and runs at low speed.';
 export const ACCIDENT_SENSITIVITY_MEDIUM_DESC = 'It is suitable for occasional poor roads and high-speed driving.';
 export const ACCIDENT_SENSITIVITY_LOW_DESC = 'It is suitable for people who travel at high speeds with bad road conditions.';
-
 export const EMERGENCY_CONTACT = 'Emergency Contacts';
 
+// image
+export const LOGO = './public/image/logo.png';
 
-export const logo = {
+export const LOGO_STYLE = {
 	width: '100%',
 	height:'50%',
 	resizeMode:'contain'
@@ -86,12 +88,18 @@ export const spaceRowBottom = {
 	marginTop: 10
 };
 
+export const flexColumn = {
+	flex: 1,
+	flexDirection: 'column',
+};
+
+export const flexRow = {
+	flex: 1,
+	flexDirection: 'row',
+};
+
 export const vCenterRow = {
 	flex: 1,
 	flexDirection: 'row',
 	alignItems: 'center'
 };
-
-export const wrapper = {
-	flex: 1,
-}

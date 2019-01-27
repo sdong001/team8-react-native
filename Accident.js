@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import { TouchableOpacity, StyleSheet, Alert } from 'react-native'
+import { StyleSheet, Alert } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 
-import { View, Container, Content, Body, Title,
+import { View, Container, Content,
 	Text, Radio, CheckBox,
 	Left, Right,
 	Card, CardItem, Icon,
@@ -12,7 +12,7 @@ import { View, Container, Content, Body, Title,
 import SwitchCard from './components/SwitchCard';
 import Permissions from 'react-native-permissions';
 
-import { vCenterRow, spaceComponent, wrapper,
+import { flexColumn, flexRow, spaceComponent,
 	COLOR_PRIMARY, COLOR_SECONDARY, COLOR_PRIMARY_DARK, COLOR_PRIAMRY_LIGHT,
 	ACCIDENT_SENSITIVITY_INFO, ACCIDENT_ALERT_TOGGLE, ACCIDENT_ALERT_INFO, ACCIDENT_SENSITIVITY_LABEL,
 	ACCIDENT_SENSITIVITY_HIGH, ACCIDENT_SENSITIVITY_MEDIUM, ACCIDENT_SENSITIVITY_LOW,
@@ -23,6 +23,8 @@ import { vCenterRow, spaceComponent, wrapper,
 type Props = {};
 
 const HIGH = 0;
+const MID = 1;
+const LOW = 2;
 
 const levels = [
 	{
@@ -45,7 +47,7 @@ class Accident extends Component {
 		super(props);
 
 		this.state = {
-			levelRadioSelected : [ true, false, false ],
+			levelRadioSelected : [ true, false, false ], // be set from device
 			curLevel : HIGH,
 			contactsPermission: '',
 			contacts: [
@@ -107,8 +109,8 @@ class Accident extends Component {
 					</Text>
 
 					<Card>
-						<CardItem style={{flex: 1, flexDirection: 'column', backgroundColor: COLOR_PRIMARY, justifyContent:'flex-start', alignItems: 'flex-start'}}>
-							<Left style={{flex: 1, flexDirection: 'column'}}>
+						<CardItem style={[flexColumn, {backgroundColor: COLOR_PRIMARY, justifyContent:'flex-start'}]}>
+							<Left style={flexColumn}>
 								<Text style={[styles.cardTitle, {marginBottom: 10}]}>
 									{ACCIDENT_SENSITIVITY_LABEL}
 								</Text>
@@ -123,8 +125,6 @@ class Accident extends Component {
 									<Row style={styles.levelContainer}>
 										<Radio onPress={() => {
 											if( this.state.curLevel != idx ) {
-												console.log('this.state.curLevel', this.state.curLevel);
-												console.log('idx', idx);
 												let changeSeleted = this.state.levelRadioSelected;
 												changeSeleted[idx] = true;
 												changeSeleted[this.state.curLevel] = false;
@@ -147,14 +147,14 @@ class Accident extends Component {
 					</Card>
 
 					<Card>
-						<CardItem style={{flex: 1, flexDirection: 'column', backgroundColor: COLOR_PRIMARY}}>
-							<View style={{alignSelf: 'stretch', flex: 1, flexDirection: 'row', justifyContent:"space-between"}}>
+						<CardItem style={[flexColumn, {backgroundColor: COLOR_PRIMARY}]}>
+							<View style={[flexRow, {alignSelf: 'stretch', justifyContent:"space-between"}]}>
 								<Left>
 									<Text style={styles.cardTitle}>{EMERGENCY_CONTACT}</Text>
 								</Left>
 								<View style={{flexWrap: "wrap"}}>
 									<Right>
-										<View style={{flex: 1, flexDirection: 'row'}}>
+										<View style={flexRow}>
 											<Icon onPress={() => {
 												console.log('add touch');
 												if( this.state.contactsPermission == 'authorized' ) {
@@ -173,10 +173,10 @@ class Accident extends Component {
 								</View>
 							</View>
 						</CardItem>
-						<CardItem style={{flex: 1, flexDirection: 'column', backgroundColor: COLOR_PRIAMRY_LIGHT}}>
+						<CardItem style={[flexColumn, {backgroundColor: COLOR_PRIAMRY_LIGHT}]}>
 							{this.state.contacts.map((item, idx) => (
 								<View style={styles.contactsItem} >
-									<Left style={{flex: 1, flexDirection:'row'}}>
+									<Left style={flexRow}>
 										<CheckBox checked={item.checked} style={{marginRight: 25}} color={COLOR_SECONDARY} onPress={() => {
 											let changeContacts = this.state.contacts;
 											changeContacts[idx].checked = !item.checked;

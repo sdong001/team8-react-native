@@ -3,22 +3,20 @@ import { TouchableOpacity, Image } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 
 import { View, Container, Content, Body,
-	Button, Text, List, ListItem, Thumbnail,
-	Left, Right,
-	Card, CardItem, Icon, Header,
-	Grid, Col, Row}
+	Card, CardItem, Icon,
+	Grid, Row}
 	from 'native-base';
 
-import { vCenterRow, spaceComponent,
+import { flexColumn,
 	COLOR_PRIMARY, COLOR_PRIMARY_DARK, COLOR_SECONDARY,
  	NOT_PAIRED,
-	logo
+	LOGO_STYLE
 }
 from './style/common';
 
 type Props = {};
 
-const renderItems = ['EIGHT_1234', 'EIGHT_3234'];
+const renderItems = ['EIGHT_1234', 'EIGHT_3234']; // be set from device
 
 class Discover extends Component {
 	constructor(props) {
@@ -49,12 +47,12 @@ class Discover extends Component {
 			<Container style={{backgroundColor: COLOR_PRIMARY}}>
 				<Content contentContainerStyle={styles.content} padder>
 					<Grid style={{paddingLeft: 36, paddingRight: 36}}>
-						<Row size={1} style={{flex:1, flexDirection: 'column', height: 200}}>
-							<View style={{height: 200, flex: 1, justifyContent: 'center'}}>
-								<Image style={logo} source={require('./public/image/logo.png')} />
+						<Row size={1} style={flexColumn}>
+							<View style={{flex: 1, justifyContent: 'center'}}>
+								<Image style={LOGO_STYLE} source={require('./public/image/logo.png')} />
 							</View>
 						</Row>
-						<Row size={3} style={{flex: 1, flexDirection: 'column'}}>
+						<Row size={3} style={flexColumn}>
 							<Card style={styles.cardContainer}>
 								{renderItems.map((item, idx) => (
 									<TouchableOpacity style={this.state.itemBkgColor[idx]} onPress={() => {
@@ -70,7 +68,6 @@ class Discover extends Component {
 										if( idx == 0 ) {
 											this.goToHome();
 										}
-										console.log('touch listitem', idx);
 									}}>
 										<CardItem style={[this.state.itemBkgColor[idx], styles.cardItem]}>
 											<Body>

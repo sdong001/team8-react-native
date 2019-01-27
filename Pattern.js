@@ -13,7 +13,7 @@ import DivideLine from './components/DivideLine';
 import NumbericRadioBtnsView from './components/NumbericRadioBtnsView';
 import SwitchCard from './components/SwitchCard';
 
-import { vCenterRow, spaceComponent, spaceRowTop, spaceRowBottom,
+import { flexColumn, flexRow, vCenterRow, spaceComponent, spaceRowTop, spaceRowBottom,
 	COLOR_PRIMARY, COLOR_PRIAMRY_LIGHT, COLOR_SECONDARY,
  	BRIGHTNESS, BREAK_LIGHT, SYNC_LED_TEXT, OUTER_LED_TEXT, INNER_LED_TEXT, PATTERN_CIRCLE, SYNC_BOTH,
 	SPPED_ADJUST,
@@ -34,13 +34,14 @@ class Pattern extends Component {
 		};
 
 		this.state = {
-			syncToggle: false,
-			breakToggle: false,
-			outerPattern: 0,
+			syncToggle: false, // be set from device
+			breakToggle: false, // be set from device
+			brightness: 0.4, // be set from device
+			outerPattern: 0, // be set from device
 			outerBtnBkg: this.patternBkg,
-			innerPattern: 0,
+			innerPattern: 0, // be set from device
 			innerBtnBkg: this.patternBkg,
-			modeName: 'Modify Mode 1',
+			modeName: 'Modify Mode 1', // be set from device
 		};
 
 		this.goToHome.bind(this);
@@ -110,7 +111,7 @@ class Pattern extends Component {
 						<Grid>
 							<Col size={1} />
 							<Col size={2} >
-								<Slider value={0.4} size={0.5} style={
+								<Slider value={this.state.brightness} size={0.5} style={
 									{
 										flex: 1,
 										flexDirection: 'row',
@@ -125,11 +126,10 @@ class Pattern extends Component {
 					<Grid>
 						<Col size={1} />
 						<Col size={3}>
-							<View style={[spaceRowTop, {flex: 1, flexDirection: "row", alignItems: 'center', justifyContent: 'center'}]}>
-								<View style={{flex: 1, flexDirection: "row", alignItems: 'center', justifyContent: 'flex-start'}}>
+							<View style={[spaceRowTop, flexRow, {justifyContent: 'center'}]}>
+								<View style={[flexRow, {justifyContent: 'flex-start'}]}>
 									<Text style={[styles.brightOptionsTitle, styles.switchMargin]}>{BREAK_LIGHT}</Text>
 									<Switch value={this.state.breakToggle}
-										style={{ transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] }}
 										onValueChange={
 											(value) => {
 												this.setState({breakToggle:value});
@@ -139,7 +139,7 @@ class Pattern extends Component {
 
 							</View>
 
-							<View style={[spaceRowTop, {flex: 1, flexDirection: "row", alignItems: 'center', justifyContent: 'center'}]}>
+							<View style={[spaceRowTop, flexRow, {justifyContent: 'center'}]}>
 								<NumbericRadioBtnsView
 									icons={[
 										"ios-paw",
@@ -153,17 +153,16 @@ class Pattern extends Component {
 					</Grid>
 					<Card style={[spaceRowTop, {backgroundColor: COLOR_PRIAMRY_LIGHT}]}>
 						<CardItem style={{backgroundColor: COLOR_PRIMARY}} header bordered>
-							<View style={{flex: 1, flexDirection: "row", alignItems: 'center', justifyContent: 'center'}}>
+							<View style={[flexRow, {justifyContent: 'center'}]}>
 								<Text style={styles.modeText}>{this.state.modeName}</Text>
 							</View>
 						</CardItem>
 						<CardItem style={{backgroundColor: COLOR_PRIAMRY_LIGHT}}>
 
 							<Body>
-								<View style={{flex:1, flexDirection:"row", alignSelf: "center"}}>
+								<View style={[flexRow, {alignSelf: "center"}]}>
 									<Text style={[styles.switchMargin, styles.patternOptions]}>{SYNC_BOTH}</Text>
 									<Switch value={this.state.syncToggle}
-										style={{ transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] }}
 										onValueChange={
 											(value) => {
 												this.setState({syncToggle:value});

@@ -8,21 +8,17 @@ import { View, Container, Content, Body, Title,
 	Card, CardItem, Icon, Header, Item, Input,
 	Grid, Col, Row }
 	from 'native-base';
-import Dialog, { ScaleAnimation, DialogTitle, DialogButton, DialogContent } from 'react-native-popup-dialog';
+import Dialog, { DialogTitle, DialogButton, DialogContent } from 'react-native-popup-dialog';
 import ProgressCircle from 'react-native-progress-circle'
 
-import ImageCardButton from './components/ImageCardButton';
-import SwitchCard from './components/SwitchCard';
-import SeekerCard from './components/SeekerCard';
 import DivideLine from './components/DivideLine';
-
 
 import { COLOR_PRIMARY, COLOR_SECONDARY, COLOR_PRIMARY_DARK, COLOR_PRIAMRY_LIGHT,
  	DIALOG_OK, DIALOG_CLOSE,
 	APP_NAME, AUTO_CONNECT, DISCOVERABLE, LIGHT_ON, LIGHT_OFF,
 	HOME_LIGHT_PATTERN, HOME_GROUP_SYNC, HOME_ACCIDENT_ALERT, HOME_FIRMWARE_UPDATE, FIRMWARE_NEED_UPDATE,
-	FIRMWARE_UPDATE_VER, FIRMWARE_CURRENT_VER,
-	vCenterRow, spaceComponent, wrapper } from './style/common';
+	FIRMWARE_UPDATE_VER, FIRMWARE_CURRENT_VER, FIRMWARE_UPDATE_WAITING,
+	flexColumn, flexRow, vCenterRow, spaceComponent } from './style/common';
 
 const deviceSize = Dimensions.get('window');
 
@@ -34,15 +30,14 @@ class Home extends Component {
 
 		this.state = {
 			updateDlgVisible: false,
-			updatePercent: 88,
-			autoConnectToggle : false,
-			discoverableToggle: false,
-			lightToggle: false,
-			lightSync: false,
-			deviceName: 'EIGHT_1234',
-			lightState: LIGHT_OFF,
-			updateVersion: '00.01',
-			currentVersion: '00.00',
+			updatePercent: 88, // be set from device
+			autoConnectToggle : false, // be set from device
+			discoverableToggle: false, // be set from device
+			lightToggle: false, // be set from device
+			lightSync: false, // be set from device
+			lightState: LIGHT_OFF, // be set from device
+			updateVersion: '00.01', // be set from device
+			currentVersion: '00.00', // be set from device
 		};
 
 		this.goToPattern.bind(this);
@@ -67,7 +62,7 @@ class Home extends Component {
 	componentDidMount() {
 		this.homeBackPressHandler = BackHandler.addEventListener('homeBackPress', () => {
 	        if (Actions.currentScene === 'home') {
-				// doStuff()
+
 				if( this.state.updateDlgVisible ) {
 					this.setState({
 						updateDlgVisible: false
@@ -85,7 +80,7 @@ class Home extends Component {
 	componentWillMount() {
 		this.homeBackPressHandler = BackHandler.addEventListener('homeBackPress', () => {
 	        if (Actions.currentScene === 'home') {
-				// doStuff()
+
 				if( this.state.updateDlgVisible ) {
 					this.setState({
 						updateDlgVisible: false
@@ -120,7 +115,7 @@ class Home extends Component {
 							<Grid>
 								<Col size={3}>
 									<Item style={{backgroundColor: COLOR_SECONDARY, borderColor: COLOR_SECONDARY}}regular>
-										<Input style={{fontSize: 20, padding:10, color: 'white', fontWeight:'bold', backgroundColor: COLOR_SECONDARY}} />
+										<Input style={styles.deviceInput} />
 										<Icon style={[spaceComponent, {color: 'white', backgroundColor: COLOR_SECONDARY}]}
 											name="md-create" />
 									</Item>
@@ -133,7 +128,6 @@ class Home extends Component {
 											</Col>
 											<Col style={vCenterRow}>
 												<Switch value={this.state.autoConnectToggle}
-													style={{ transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] }}
 													onValueChange={
 														(value) => {
 															this.setState({autoConnectToggle:value});
@@ -150,7 +144,6 @@ class Home extends Component {
 											</Col>
 											<Col style={vCenterRow}>
 												<Switch value={this.state.discoverableToggle}
-													style={{ transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] }}
 													onValueChange={
 														(value) => {
 															this.setState({discoverableToggle:value});
@@ -177,11 +170,10 @@ class Home extends Component {
 								<Icon style={spaceComponent}
 									name="md-flash" />
 							</Left>
-							<Right style={{flex: 1, flexDirection: 'column'}}>
-								<View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+							<Right style={flexColumn}>
+								<View style={[flexRow, {alignItems: 'center'}]}>
 									<Text style={styles.lightStateText}>{this.state.lightState}</Text>
 									<Switch value={this.state.lightToggle}
-										style={{ transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] }}
 										onValueChange={
 											(value) => {
 												let lightChange = this.state.lightToggle ? LIGHT_OFF : LIGHT_ON;
@@ -199,16 +191,16 @@ class Home extends Component {
 					<Grid>
 						<Row>
 							<Col>
-								<TouchableOpacity onPress={this.goToPattern}>
+								<TouchableOpacity onPress={this.goToPattern} activeOpacity={1}>
 									<View style={{paddingRight: 10, paddingBottom: 5}}>
 										<Card style={styles.container}>
 											<CardItem style={styles.cardItem}>
-												<View style={{flex: 1,  flexDirection: 'column'}}>
+												<View style={flexColumn}>
 													<Text style={styles.cardTitle}>Icon</Text>
 												</View>
 											</CardItem>
 											<CardItem style={styles.cardItem}>
-												<View style={{flex: 1,  flexDirection: 'column'}}>
+												<View style={flexColumn}>
 													<Text style={styles.cardTitle}>{HOME_LIGHT_PATTERN}</Text>
 												</View>
 											</CardItem>
@@ -220,16 +212,15 @@ class Home extends Component {
 								<View style={{paddingBottom: 5}}>
 									<Card style={styles.container}>
 										<CardItem style={styles.cardItem}>
-											<View style={{flex: 1,  flexDirection: 'column'}}>
+											<View style={flexColumn}>
 												<Text style={styles.cardTitle}>Icon</Text>
 											</View>
 										</CardItem>
 										<CardItem style={styles.cardItem}>
-											<View style={{flex: 1,  flexDirection: 'column'}}>
+											<View style={flexColumn}>
 												<Text style={styles.cardTitle}>{HOME_GROUP_SYNC}</Text>
 											</View>
 											<Switch value={this.state.lightSync}
-												style={{ transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] }}
 												onValueChange={
 													(value) => {
 														this.setState({
@@ -244,16 +235,16 @@ class Home extends Component {
 						</Row>
 						<Row>
 							<Col>
-								<TouchableOpacity onPress={this.goToAccident}>
+								<TouchableOpacity onPress={this.goToAccident} activeOpacity={1}>
 									<View style={{paddingRight: 10, paddingBottom: 10}}>
 										<Card style={styles.container}>
 											<CardItem style={styles.cardItem}>
-												<View style={{flex: 1,  flexDirection: 'column'}}>
+												<View style={flexColumn}>
 													<Text style={styles.cardTitle}>Icon</Text>
 												</View>
 											</CardItem>
 											<CardItem style={styles.cardItem}>
-												<View style={{flex: 1,  flexDirection: 'column'}}>
+												<View style={flexColumn}>
 													<Text style={styles.cardTitle}>{HOME_ACCIDENT_ALERT}</Text>
 												</View>
 											</CardItem>
@@ -263,11 +254,11 @@ class Home extends Component {
 							</Col>
 							<Col>
 								<View style={{paddingBottom: 10}}>
-									<TouchableOpacity onPress={() => {this.showUpdateDlg();}}>
+									<TouchableOpacity onPress={() => {this.showUpdateDlg();}} activeOpacity={1}>
 										<Card style={styles.container}>
 											<Grid style={{flex: 1}}>
-												<Row size={1} style={{flex: 1,  flexDirection: 'column', justifyContent: 'center'}}>
-													<View style={{flex: 1,  flexDirection: 'column', justifyContent: 'center'}}>
+												<Row size={1} style={[flexColumn, {justifyContent: 'center'}]}>
+													<View style={[flexColumn, {justifyContent: 'center'}]}>
 														<Text style={styles.firmwareTitle}>{HOME_FIRMWARE_UPDATE}</Text>
 													</View>
 												</Row>
@@ -306,10 +297,6 @@ class Home extends Component {
 					<Dialog
 						width="0.7"
 						visible={this.state.updateDlgVisible}
-						dialogAnimation={new ScaleAnimation({
-							toValue: 0,
-							useNativeDriver: true,
-						})}
 						onTouchOutside={() => {
 							this.setState({ updateDlgVisible: false });
 						}}
@@ -317,7 +304,6 @@ class Home extends Component {
 						actions={[
 								<DialogButton
 									text={DIALOG_OK}
-
 									onPress={() => {
 										this.setState({ updateDlgVisible: false });
 									}}
@@ -325,15 +311,15 @@ class Home extends Component {
 						]}
 					>
 						<DialogContent>
-							<Text style={{alignSelf: 'center', padding:20 }}>Please wait for update. . .</Text>
+							<Text style={{alignSelf: 'center', padding: 20 }}>{FIRMWARE_UPDATE_WAITING}</Text>
 							<View style={{alignSelf: 'center'}} >
 								<ProgressCircle
 									percent={this.state.updatePercent}
 									radius={50}
 									borderWidth={8}
-									color="#3399FF"
+									color={COLOR_SECONDARY}
 									shadowColor="#999"
-									bgColor="#fff"
+									bgColor={COLOR_PRIAMRY_LIGHT}
 								>
 									<Text style={{ fontSize: 18 }}>{this.state.updatePercent + '%'}</Text>
 								</ProgressCircle>
@@ -347,6 +333,14 @@ class Home extends Component {
 }
 
 const styles = StyleSheet.create({
+	deviceInput: {
+		fontSize: 20,
+		padding: 10,
+		color: 'white',
+		fontWeight:'bold',
+		backgroundColor: COLOR_SECONDARY
+	},
+
 	container: {
 		flex: 1,
 		height: deviceSize.width / 2 - 20,
