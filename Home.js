@@ -38,8 +38,9 @@ class Home extends Component {
 			autoConnectToggle : false,
 			discoverableToggle: false,
 			lightToggle: false,
+			lightSync: false,
 			deviceName: 'EIGHT_1234',
-			lightState: LIGHT_ON,
+			lightState: LIGHT_OFF,
 			updateVersion: '00.01',
 			currentVersion: '00.00',
 		};
@@ -188,7 +189,7 @@ class Home extends Component {
 										style={{ transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] }}
 										onValueChange={
 											(value) => {
-												let lightChange = this.state.lightToggle ? LIGHT_ON : LIGHT_OFF;
+												let lightChange = this.state.lightToggle ? LIGHT_OFF : LIGHT_ON;
 
 												this.setState({
 													lightToggle: value,
@@ -208,6 +209,11 @@ class Home extends Component {
 										<Card style={styles.container}>
 											<CardItem style={styles.cardItem}>
 												<View style={{flex: 1,  flexDirection: 'column'}}>
+													<Text style={styles.cardTitle}>Icon</Text>
+												</View>
+											</CardItem>
+											<CardItem style={styles.cardItem}>
+												<View style={{flex: 1,  flexDirection: 'column'}}>
 													<Text style={styles.cardTitle}>{HOME_LIGHT_PATTERN}</Text>
 												</View>
 											</CardItem>
@@ -221,8 +227,22 @@ class Home extends Component {
 										<Card style={styles.container}>
 											<CardItem style={styles.cardItem}>
 												<View style={{flex: 1,  flexDirection: 'column'}}>
+													<Text style={styles.cardTitle}>Icon</Text>
+												</View>
+											</CardItem>
+											<CardItem style={styles.cardItem}>
+												<View style={{flex: 1,  flexDirection: 'column'}}>
 													<Text style={styles.cardTitle}>{HOME_GROUP_SYNC}</Text>
 												</View>
+												<Switch value={this.state.lightSync}
+													style={{ transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] }}
+													onValueChange={
+														(value) => {
+															this.setState({
+																lightSync: value
+															});
+														}
+													} />
 											</CardItem>
 										</Card>
 									</View>
@@ -234,6 +254,11 @@ class Home extends Component {
 								<TouchableOpacity onPress={this.goToAccident}>
 									<View style={{paddingRight: 10, paddingBottom: 10}}>
 										<Card style={styles.container}>
+											<CardItem style={styles.cardItem}>
+												<View style={{flex: 1,  flexDirection: 'column'}}>
+													<Text style={styles.cardTitle}>Icon</Text>
+												</View>
+											</CardItem>
 											<CardItem style={styles.cardItem}>
 												<View style={{flex: 1,  flexDirection: 'column'}}>
 													<Text style={styles.cardTitle}>{HOME_ACCIDENT_ALERT}</Text>
