@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import { View} from 'native-base';
 
+import { COLOR_PRIMARY } from '../style/common';
+
 class DivideLine extends Component {
 
 	render() {
@@ -11,7 +13,7 @@ class DivideLine extends Component {
 				{
 					flex:1,
 					flexDirection:'row',
-					backgroundColor: 'lightgray',
+					backgroundColor: COLOR_PRIMARY,
 					width: '100%',
 					height: 1}
 				}

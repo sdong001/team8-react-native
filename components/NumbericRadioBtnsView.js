@@ -33,7 +33,7 @@ class NumbericRadioBtnsView extends Component {
 	render() {
 		return (
 			<View style={vCenterRow}>
-				<Text>
+				<Text style={{fontSize: 25}}>
 					Mode
 				</Text>
 				{this.props.icons.map((item, idx) => (

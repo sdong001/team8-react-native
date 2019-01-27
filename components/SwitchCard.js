@@ -7,6 +7,7 @@ import { Switch } from 'react-native';
 class SwitchCard extends Component {
 	static propTypes = {
 		title: PropTypes.string.isRequired,
+		titleStyle: PropTypes.object,
 		cardBkgColor: PropTypes.string,
 	}
 
@@ -23,7 +24,7 @@ class SwitchCard extends Component {
 			<Card>
 				<CardItem style={{justifyContent:"space-between", backgroundColor: this.props.cardBkgColor}}>
 					<Left>
-						<Text>{this.props.title}</Text>
+						<Text style={this.props.titleStyle}>{this.props.title}</Text>
 					</Left>
 					<Right>
 						<Switch value={this.state.toggle}

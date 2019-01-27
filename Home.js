@@ -17,8 +17,11 @@ import SeekerCard from './components/SeekerCard';
 import DivideLine from './components/DivideLine';
 
 
-import { UPDATE_DIALOG_TITLE_TEXT, DIALOG_OK, DIALOG_CLOSE,
-	HOME_LIGHT_PATTERN, HOME_GROUP_SYNC, HOME_ACCIDENT_ALERT, HOME_FIRMWARE_UPDATE,
+import { COLOR_PRIMARY, COLOR_SECONDARY, COLOR_PRIMARY_DARK, COLOR_PRIAMRY_LIGHT,
+ 	DIALOG_OK, DIALOG_CLOSE,
+	APP_NAME, AUTO_CONNECT, DISCOVERABLE, LIGHT_ON, LIGHT_OFF,
+	HOME_LIGHT_PATTERN, HOME_GROUP_SYNC, HOME_ACCIDENT_ALERT, HOME_FIRMWARE_UPDATE, FIRMWARE_NEED_UPDATE,
+	FIRMWARE_UPDATE_VER, FIRMWARE_CURRENT_VER,
 	vCenterRow, spaceComponent, wrapper } from './style/common';
 
 const deviceSize = Dimensions.get('window');
@@ -35,6 +38,10 @@ class Home extends Component {
 			autoConnectToggle : false,
 			discoverableToggle: false,
 			lightToggle: false,
+			deviceName: 'EIGHT_1234',
+			lightState: LIGHT_ON,
+			updateVersion: '00.01',
+			currentVersion: '00.00',
 		};
 
 		this.goToPattern.bind(this);
@@ -105,7 +112,7 @@ class Home extends Component {
 				<Content padder>
 					<View style={{flex: 1, flexDirection: 'row'}}>
 						<Text style={styles.titleText}>
-							TEAM 8
+							{APP_NAME}
 						</Text>
 						<Grid style={{marginLeft: 12}}>
 							<Row></Row><Row></Row>
@@ -113,18 +120,20 @@ class Home extends Component {
 						</Grid>
 					</View>
 					<Card>
-						<CardItem style={{justifyContent:"space-between"}}>
+						<CardItem style={{justifyContent:"space-between", backgroundColor: COLOR_PRIMARY}}>
 							<Grid>
 								<Col size={3}>
-									<Item regular>
-										<Input placeholder='EIGHT_3432' />
-										<Icon style={spaceComponent}
+									<Item style={{backgroundColor: COLOR_SECONDARY, borderColor: COLOR_SECONDARY}}regular>
+										<Input style={{fontSize: 20, padding:10, color: 'white', fontWeight:'bold', backgroundColor: COLOR_SECONDARY}} />
+										<Icon style={[spaceComponent, {color: 'white', backgroundColor: COLOR_SECONDARY}]}
 											name="md-create" />
 									</Item>
 									<Grid style={{marginLeft: 10, marginTop: 5}}>
 										<Row>
+											<Icon style={spaceComponent}
+												name="md-create" />
 											<Col style={vCenterRow}>
-												<Text>Auto Connect</Text>
+												<Text style={styles.bluetoothOptionsText}>{AUTO_CONNECT}</Text>
 											</Col>
 											<Col style={vCenterRow}>
 												<Switch value={this.state.autoConnectToggle}
@@ -138,8 +147,10 @@ class Home extends Component {
 										</Row>
 
 										<Row>
+											<Icon style={spaceComponent}
+												name="md-create" />
 											<Col style={vCenterRow}>
-												<Text>Discoverable</Text>
+												<Text style={styles.bluetoothOptionsText}>{DISCOVERABLE}</Text>
 											</Col>
 											<Col style={vCenterRow}>
 												<Switch value={this.state.discoverableToggle}
@@ -170,14 +181,22 @@ class Home extends Component {
 								<Icon style={spaceComponent}
 									name="md-create" />
 							</Left>
-							<Right>
-								<Switch value={this.state.lightToggle}
-									style={{ transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] }}
-									onValueChange={
-										(value) => {
-											this.setState({lightToggle:value});
-										}
-									} />
+							<Right style={{flex: 1, flexDirection: 'column'}}>
+								<View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+									<Text style={styles.lightStateText}>{this.state.lightState}</Text>
+									<Switch value={this.state.lightToggle}
+										style={{ transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] }}
+										onValueChange={
+											(value) => {
+												let lightChange = this.state.lightToggle ? LIGHT_ON : LIGHT_OFF;
+
+												this.setState({
+													lightToggle: value,
+													lightState: lightChange
+												});
+											}
+										} />
+								</View>
 							</Right>
 						</CardItem>
 					</Card>
@@ -187,9 +206,9 @@ class Home extends Component {
 								<TouchableOpacity onPress={this.goToPattern}>
 									<View style={{paddingRight: 10, paddingBottom: 5}}>
 										<Card style={styles.container}>
-											<CardItem>
+											<CardItem style={styles.cardItem}>
 												<View style={{flex: 1,  flexDirection: 'column'}}>
-													<Text style={{textAlign: 'center'}}>{HOME_LIGHT_PATTERN}</Text>
+													<Text style={styles.cardTitle}>{HOME_LIGHT_PATTERN}</Text>
 												</View>
 											</CardItem>
 										</Card>
@@ -200,9 +219,9 @@ class Home extends Component {
 								<TouchableOpacity onPress={this.goToGroup}>
 									<View style={{paddingBottom: 5}}>
 										<Card style={styles.container}>
-											<CardItem>
+											<CardItem style={styles.cardItem}>
 												<View style={{flex: 1,  flexDirection: 'column'}}>
-													<Text style={{textAlign: 'center'}}>{HOME_GROUP_SYNC}</Text>
+													<Text style={styles.cardTitle}>{HOME_GROUP_SYNC}</Text>
 												</View>
 											</CardItem>
 										</Card>
@@ -215,9 +234,9 @@ class Home extends Component {
 								<TouchableOpacity onPress={this.goToAccident}>
 									<View style={{paddingRight: 10, paddingBottom: 10}}>
 										<Card style={styles.container}>
-											<CardItem>
+											<CardItem style={styles.cardItem}>
 												<View style={{flex: 1,  flexDirection: 'column'}}>
-													<Text style={{textAlign: 'center'}}>{HOME_ACCIDENT_ALERT}</Text>
+													<Text style={styles.cardTitle}>{HOME_ACCIDENT_ALERT}</Text>
 												</View>
 											</CardItem>
 										</Card>
@@ -226,37 +245,42 @@ class Home extends Component {
 							</Col>
 							<Col>
 								<View style={{paddingBottom: 10}}>
-									<Card style={styles.container}>
-										<Grid style={{flex: 1}}>
-											<Row size={1} style={{flex: 1,  flexDirection: 'column', justifyContent: 'center'}}>
-												<TouchableOpacity onPress={() => {this.showUpdateDlg();}}>
+									<TouchableOpacity onPress={() => {this.showUpdateDlg();}}>
+										<Card style={styles.container}>
+											<Grid style={{flex: 1}}>
+												<Row size={1} style={{flex: 1,  flexDirection: 'column', justifyContent: 'center'}}>
 													<View style={{flex: 1,  flexDirection: 'column', justifyContent: 'center'}}>
-														<Text style={{alignSelf:'center', textAlign: 'center'}}>{HOME_FIRMWARE_UPDATE}</Text>
+														<Text style={styles.firmwareTitle}>{HOME_FIRMWARE_UPDATE}</Text>
 													</View>
-												</TouchableOpacity>
-											</Row>
-											<Row size={2} style={{backgroundColor: 'gray', justifyContent: 'center'}}>
-												<Grid style={{padding: 20}}>
-													<Row>
-														<Left>
-															<Text>Updated Ver.</Text>
-														</Left>
-														<Right>
-															<Text>00.01</Text>
-														</Right>
-													</Row>
-													<Row>
-														<Left>
-															<Text>Current Ver.</Text>
-														</Left>
-														<Right>
-															<Text>00.00</Text>
-														</Right>
-													</Row>
-												</Grid>
-											</Row>
-										</Grid>
-									</Card>
+												</Row>
+												<Row size={2} style={{backgroundColor: COLOR_PRIAMRY_LIGHT, justifyContent: 'center'}}>
+													<Grid style={{padding: 15}}>
+														<Row>
+															<Left>
+																<Text style={styles.firwareInfo}>{FIRMWARE_UPDATE_VER}</Text>
+															</Left>
+															<Right>
+																<Text style={styles.firwareInfo}>{this.state.updateVersion}</Text>
+															</Right>
+														</Row>
+														<Row>
+															<Left>
+																<Text style={styles.firwareInfo}>{FIRMWARE_CURRENT_VER}</Text>
+															</Left>
+															<Right>
+																<Text style={styles.firwareInfo}>{this.state.currentVersion}</Text>
+															</Right>
+														</Row>
+														<Row>
+															<Left />
+															<Text style={styles.firmwareAlert}>{FIRMWARE_NEED_UPDATE}</Text>
+															<Right />
+														</Row>
+													</Grid>
+												</Row>
+											</Grid>
+										</Card>
+									</TouchableOpacity>
 								</View>
 							</Col>
 						</Row>
@@ -271,7 +295,7 @@ class Home extends Component {
 						onTouchOutside={() => {
 							this.setState({ updateDlgVisible: false });
 						}}
-						dialogTitle={<DialogTitle title={UPDATE_DIALOG_TITLE_TEXT} />}
+						dialogTitle={<DialogTitle title={HOME_FIRMWARE_UPDATE} />}
 						actions={[
 								<DialogButton
 									text={DIALOG_OK}
@@ -305,19 +329,60 @@ class Home extends Component {
 }
 
 const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		height: deviceSize.width / 2 - 20,
+		backgroundColor: COLOR_PRIMARY,
+	},
+
+	cardItem: {
+		backgroundColor: COLOR_PRIMARY
+	},
+
+	cardTitle: {
+		fontSize: 25,
+		color: 'white',
+		textAlign: 'center',
+	},
+
+	firmwareTitle: {
+		fontSize: 20,
+		color: 'white',
+		textAlign: 'center',
+	},
+
+	firwareInfo: {
+		fontSize: 17,
+		color: 'white',
+		textAlign: 'center',
+	},
+
+	firmwareAlert: {
+		fontSize: 17,
+		color: '#ffd460',
+		textAlign: 'center',
+	},
+
 	titleText: {
 		marginLeft: 10,
 		marginRight: 6,
 		marginTop: 10,
 		marginBottom: 10,
-		fontSize: 25,
+		fontSize: 30,
 		fontWeight: 'bold',
 	},
 
-	container: {
-		flex: 1,
-		height: deviceSize.width / 2 - 20,
-	}
+	bluetoothOptionsText : {
+		fontSize: 18,
+		color: 'white'
+	},
+
+	lightStateText : {
+		fontSize: 25,
+		fontWeight: 'bold',
+		color: 'black',
+		marginRight: 25,
+	},
 });
 
 export default Home

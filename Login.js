@@ -9,7 +9,9 @@ import { Container, Content,
 	Grid, Col, Row}
 	from 'native-base';
 
-import { vCenterRow, spaceComponent } from './style/common';
+import { vCenterRow, spaceComponent,
+	COLOR_PRIMARY }
+from './style/common';
 
 type Props = {};
 
@@ -23,7 +25,7 @@ const Login = () => {
 	}
 
 	return (
-		<Container>
+		<Container style={{backgroundColor: COLOR_PRIMARY}}>
 			<Content contentContainerStyle={styles.content} padder>
 				<Grid style={{paddingLeft: 36, paddingRight: 36}}>
 					<Row>
@@ -35,12 +37,12 @@ const Login = () => {
 					</Row>
 
 					<Row style={{flex: 1, flexDirection: 'column'}}>
-						<Text style={styles.welcomeText}>
+						<Text style={[styles.welcomeText, {fontSize: 22.5, color:'#ffffff'}]}>
 							Login to fully enjoy EIGHT’s features !
 						</Text>
-						<Button style={{marginTop: 25, marginBottom: 18}} primary block onPress={goToDiscover}>
+						<Button style={{marginTop: 25, marginBottom: 18, backgroundColor: '#3c5a99'}} primary block onPress={goToDiscover}>
 							<Grid>
-								<Col size={3} style={{width: 24, marginLeft:10}}>
+								<Col size={2} style={{marginLeft:10}}>
 									<Icon style={{alignSelf: 'center'}} name="logo-facebook" />
 								</Col>
 								<Col size={9} style={{justifyContent: 'center'}}>
@@ -51,9 +53,9 @@ const Login = () => {
 							</Grid>
 
 						</Button>
-						<Button primary block>
+						<Button primary block style={{backgroundColor: '#d34836'}}>
 							<Grid>
-								<Col size={3} style={{width: 24, marginLeft:10}}>
+								<Col size={2} style={{marginLeft:10}}>
 									<Icon style={{alignSelf: 'center'}} name="logo-googleplus" />
 								</Col>
 								<Col size={9} style={{justifyContent: 'center'}}>
@@ -82,7 +84,7 @@ const styles = {
 	},
 
 	loginText : {
-		fontSize: 15,
+		fontSize: 18,
 		textAlign: 'left'
 	},
 }

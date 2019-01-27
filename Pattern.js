@@ -14,7 +14,9 @@ import NumbericRadioBtnsView from './components/NumbericRadioBtnsView';
 import SwitchCard from './components/SwitchCard';
 
 import { vCenterRow, spaceComponent, spaceRowTop, spaceRowBottom,
- 	BRIGHTNESS, BREAK_LIGHT, SYNC_LED_TEXT, OUTER_LED_TEXT, INNER_LED_TEXT, PATTERN_CIRCLE, SYNC_BOTH
+	COLOR_PRIMARY, COLOR_PRIAMRY_LIGHT, COLOR_SECONDARY,
+ 	BRIGHTNESS, BREAK_LIGHT, SYNC_LED_TEXT, OUTER_LED_TEXT, INNER_LED_TEXT, PATTERN_CIRCLE, SYNC_BOTH,
+	SPPED_ADJUST,
 } from './style/common';
 
 type Props = {};
@@ -23,11 +25,22 @@ class Pattern extends Component {
 	constructor(props) {
 		super(props);
 
+		this.patternBkg = {
+			backgroundColor: COLOR_SECONDARY
+		};
+
+		this.offBkg = {
+			backgroundColor: 'gray'
+		};
+
 		this.state = {
 			syncToggle: false,
 			breakToggle: false,
 			outerPattern: 0,
-			innerPattern: 0
+			outerBtnBkg: this.patternBkg,
+			innerPattern: 0,
+			innerBtnBkg: this.patternBkg,
+			modeName: 'Modify Mode 1',
 		};
 
 		this.goToHome.bind(this);
@@ -51,13 +64,16 @@ class Pattern extends Component {
 
 						<Grid>
 							<Col size={1}>
-								<Button style={styles.patternBtn} primary onPress={() => {
+								<Button style={[styles.patternBtn, this.state.innerBtnBkg]} primary onPress={() => {
+									let changeBkg = this.state.innerPattern + 1 == PATTERN_CIRCLE.length - 1 ? this.offBkg : this.patternBkg;
+
 									let nextPattern = (this.state.innerPattern + 1) % PATTERN_CIRCLE.length;
 									this.setState({
-										innerPattern: nextPattern
+										innerPattern: nextPattern,
+										innerBtnBkg: changeBkg,
 									})
 								}}>
-									<Text>
+									<Text style={styles.patternBtnText}>
 										{PATTERN_CIRCLE[this.state.innerPattern]}
 									</Text>
 								</Button>
@@ -65,8 +81,8 @@ class Pattern extends Component {
 							<Col size={2}>
 								<Row size={1}>
 									<View style={{justifyContent: 'flex-end'}}>
-										<Text style={styles.speedMargin}>
-											Speed
+										<Text style={[styles.speedMargin, styles.patternOptions]}>
+											{SPPED_ADJUST}
 										</Text>
 									</View>
 								</Row>
@@ -88,13 +104,13 @@ class Pattern extends Component {
 			<Container>
 				<Content padder>
 					<View style={spaceRowBottom}>
-						<Icon style={{alignSelf: 'center', margin: 5}} name />
-						<Text style={{alignSelf: 'center', margin: 5}}>{BRIGHTNESS}</Text>
-						<Text style={{alignSelf: 'center', margin: 5}}>50%</Text>
+						<Icon style={[styles.brightOptions]} name />
+						<Text style={[styles.brightOptions, {fontSize: 17}]}>{BRIGHTNESS}</Text>
+						<Text style={[styles.brightOptions, {fontSize: 23}]}>40%</Text>
 						<Grid>
 							<Col size={1} />
 							<Col size={2} >
-								<Slider value={0.5} size={0.5} style={
+								<Slider value={0.4} size={0.5} style={
 									{
 										flex: 1,
 										flexDirection: 'row',
@@ -110,8 +126,8 @@ class Pattern extends Component {
 						<Col size={1} />
 						<Col size={3}>
 							<View style={[spaceRowTop, {flex: 1, flexDirection: "row", alignItems: 'center', justifyContent: 'center'}]}>
-								<View style={{flex: 1, flexDirection: "row", alignItems: 'flex-start', justifyContent: 'flex-start'}}>
-									<Text style={styles.switchMargin}>{BREAK_LIGHT}</Text>
+								<View style={{flex: 1, flexDirection: "row", alignItems: 'center', justifyContent: 'flex-start'}}>
+									<Text style={[styles.brightOptionsTitle, styles.switchMargin]}>{BREAK_LIGHT}</Text>
 									<Switch value={this.state.breakToggle}
 										style={{ transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] }}
 										onValueChange={
@@ -135,16 +151,17 @@ class Pattern extends Component {
 						</Col>
 						<Col size={1} />
 					</Grid>
-					<Card style={spaceRowTop}>
-						<CardItem style={{backgroundColor: 'gray'}} header bordered>
+					<Card style={[spaceRowTop, {backgroundColor: COLOR_PRIAMRY_LIGHT}]}>
+						<CardItem style={{backgroundColor: COLOR_PRIMARY}} header bordered>
 							<View style={{flex: 1, flexDirection: "row", alignItems: 'center', justifyContent: 'center'}}>
-								<Text>Modify Mode 1</Text>
+								<Text style={styles.modeText}>{this.state.modeName}</Text>
 							</View>
 						</CardItem>
-						<CardItem bordered>
+						<CardItem style={{backgroundColor: COLOR_PRIAMRY_LIGHT}}>
+
 							<Body>
-								<View style={{ flex:1, flexDirection:"row", alignSelf: "center"}}>
-									<Text styles={styles.switchMargin}>{SYNC_BOTH}     </Text>
+								<View style={{flex:1, flexDirection:"row", alignSelf: "center"}}>
+									<Text style={[styles.switchMargin, styles.patternOptions]}>{SYNC_BOTH}</Text>
 									<Switch value={this.state.syncToggle}
 										style={{ transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] }}
 										onValueChange={
@@ -161,13 +178,16 @@ class Pattern extends Component {
 
 									<Grid>
 										<Col size={1}>
-											<Button style={styles.patternBtn} primary onPress={() => {
+											<Button style={[styles.patternBtn, this.state.outerBtnBkg]} primary onPress={() => {
+												let changeBkg = this.state.outerPattern + 1 == PATTERN_CIRCLE.length - 1 ? this.offBkg : this.patternBkg;
+
 												let nextPattern = (this.state.outerPattern + 1) % PATTERN_CIRCLE.length;
 												this.setState({
-													outerPattern: nextPattern
+													outerPattern: nextPattern,
+													outerBtnBkg: changeBkg,
 												})
 											}}>
-												<Text>
+												<Text style={styles.patternBtnText}>
 													{PATTERN_CIRCLE[this.state.outerPattern]}
 												</Text>
 											</Button>
@@ -175,8 +195,8 @@ class Pattern extends Component {
 										<Col size={2}>
 											<Row size={1}>
 												<View style={{justifyContent: 'flex-end'}}>
-													<Text style={styles.speedMargin}>
-														Speed
+													<Text style={[styles.speedMargin, styles.patternOptions]}>
+														{SPPED_ADJUST}
 													</Text>
 												</View>
 											</Row>
@@ -202,6 +222,17 @@ const styles = StyleSheet.create({
 	titleLED : {
 		marginTop: 10,
 		marginBottom: 10,
+		fontSize: 25,
+		color: 'white'
+	},
+
+	brightOptions: {
+		alignSelf: 'center',
+		margin: 5
+	},
+
+	brightOptionsTitle: {
+		fontSize: 25
 	},
 
 	speedMargin: {
@@ -212,10 +243,24 @@ const styles = StyleSheet.create({
 		marginRight: 20
 	},
 
+	modeText: {
+		fontSize: 25,
+		color: 'white',
+	},
+
+	patternOptions: {
+		color: 'white',
+		fontSize: 20,
+	},
+
 	patternBtn : {
 		justifyContent: 'center',
 		width: 100,
 		height: 100,
+	},
+
+	patternBtnText : {
+		fontSize: 16,
 	},
 
 	adjustView : {

@@ -1,31 +1,46 @@
 // Color
-export const COLOR_PRIMARY = '#58C9B9';
-export const COLOR_SECONDARY = '#111';
-
+export const COLOR_PRIMARY = '#2d4059';
+export const COLOR_SECONDARY = '#011a30';
+export const COLOR_PRIMARY_DARK = '#132c45';
+export const COLOR_PRIAMRY_LIGHT = '#586b86';
 // Font
 export const FONT_NORMAL = 'OpenSans-Regular';
 export const FONT_BOLD = 'OpenSans-Bold';
+
+export const APP_NAME = 'EIGHT';
 
 // Radius
 export const BORDER_RADIUS = 5;
 
 // String
 
+// Home
+export const AUTO_CONNECT = 'Auto Connect';
+export const DISCOVERABLE = 'Discoverable';
+export const LIGHT_ON = 'Light ON';
+export const LIGHT_OFF = 'Light OFF';
 export const HOME_LIGHT_PATTERN = 'Light & \nPattern';
 export const HOME_GROUP_SYNC = 'Group\nSync';
 export const HOME_ACCIDENT_ALERT = 'Accident\nAlert';
 export const HOME_FIRMWARE_UPDATE = 'Firmware Update';
+export const UPDATE_DIALOG_TITLE_TEXT = 'Firmware Update';
+export const FIRMWARE_NEED_UPDATE = 'Need Update!';
+export const FIRMWARE_UPDATE_VER = 'Update Ver.';
+export const FIRMWARE_CURRENT_VER = 'Current Ver.';
 
+// Discover
+export const NOT_PAIRED = 'Not Paired Device';
+
+// Pattern
 export const BRIGHTNESS = 'Brightness';
 export const BREAK_LIGHT = 'Breaklight';
 export const SYNC_BOTH = 'Sync';
+export const SPPED_ADJUST = 'Speed';
 export const SYNC_LED_TEXT = 'Outer & Innder LED';
 export const OUTER_LED_TEXT = 'Outer LED';
 export const INNER_LED_TEXT = 'Inner LED';
-export const UPDATE_DIALOG_TITLE_TEXT = 'Firmware Update';
 export const DIALOG_OK = 'OK';
 export const DIALOG_CLOSE = 'CANCEL';
-
 export const PATTERN_CIRCLE = [
 		"Pattern 1",
 		"Pattern 2",
@@ -35,6 +50,7 @@ export const PATTERN_CIRCLE = [
 		"Off"
 ];
 
+// Accident
 export const ACCIDENT_ALERT_TOGGLE = 'Accident Alert';
 export const ACCIDENT_ALERT_INFO = `If accidents occur, our app notifies to emergency contacts which you saved in the app.`;
 export const ACCIDENT_SENSITIVITY_LABEL = 'Sensitivity Level';
@@ -42,9 +58,9 @@ export const ACCIDENT_SENSITIVITY_INFO = `The behavior of the accident detection
 export const ACCIDENT_SENSITIVITY_HIGH = 'HIGH';
 export const ACCIDENT_SENSITIVITY_MEDIUM = 'MEDIUM';
 export const ACCIDENT_SENSITIVITY_LOW = 'LOW';
-export const ACCIDENT_SENSITIVITY_HIGH_DESC = 'HIGH DESC';
-export const ACCIDENT_SENSITIVITY_MEDIUM_DESC = 'MEDIUM DESC';
-export const ACCIDENT_SENSITIVITY_LOW_DESC = 'LOW DESC';
+export const ACCIDENT_SENSITIVITY_HIGH_DESC = 'It is mainly suitable for the driver who has good road condition and runs at low speed.';
+export const ACCIDENT_SENSITIVITY_MEDIUM_DESC = 'It is suitable for occasional poor roads and high-speed driving.';
+export const ACCIDENT_SENSITIVITY_LOW_DESC = 'It is suitable for people who travel at high speeds with bad road conditions.';
 
 export const EMERGENCY_CONTACT = 'Emergency Contacts';
 
