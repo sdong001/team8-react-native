@@ -1,16 +1,19 @@
 import React, {Component} from 'react';
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity, Image } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 
 import { Container, Content,
 	Button, Text,
 	Left, Right,
 	Card, CardItem, Icon, Header, View,
-	Grid, Col, Row}
-	from 'native-base';
+	Grid, Col, Row
+} from 'native-base';
+
+var { FBLogin, FBLoginManager } = require('react-native-facebook-login');
+// import FacebookLogin from './components/FacebookLogin';
 
 import { vCenterRow, spaceComponent,
-	COLOR_PRIMARY }
+	COLOR_PRIMARY, logo }
 from './style/common';
 
 type Props = {};
@@ -30,9 +33,7 @@ const Login = () => {
 				<Grid style={{paddingLeft: 36, paddingRight: 36}}>
 					<Row>
 						<View style={{flex: 1, justifyContent: 'center'}}>
-							<Text style={{textAlign: 'center'}}>
-								TEAM EIGHT
-							</Text>
+							<Image style={logo} source={require('./public/image/logo.png')} />
 						</View>
 					</Row>
 
@@ -40,6 +41,7 @@ const Login = () => {
 						<Text style={[styles.welcomeText, {fontSize: 22.5, color:'#ffffff'}]}>
 							Login to fully enjoy EIGHT’s features !
 						</Text>
+						<FBLogin />
 						<Button style={{marginTop: 25, marginBottom: 18, backgroundColor: '#3c5a99'}} primary block onPress={goToDiscover}>
 							<Grid>
 								<Col size={2} style={{marginLeft:10}}>

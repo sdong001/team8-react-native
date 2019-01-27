@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity, Image } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 
 import { View, Container, Content, Body,
@@ -11,7 +11,8 @@ import { View, Container, Content, Body,
 
 import { vCenterRow, spaceComponent,
 	COLOR_PRIMARY, COLOR_PRIMARY_DARK, COLOR_SECONDARY,
- 	NOT_PAIRED
+ 	NOT_PAIRED,
+	logo
 }
 from './style/common';
 
@@ -48,14 +49,12 @@ class Discover extends Component {
 			<Container style={{backgroundColor: COLOR_PRIMARY}}>
 				<Content contentContainerStyle={styles.content} padder>
 					<Grid style={{paddingLeft: 36, paddingRight: 36}}>
-						<Row>
-							<View style={{flex: 1, justifyContent: 'center'}}>
-								<Text style={{textAlign: 'center'}}>
-									TEAM EIGHT
-								</Text>
+						<Row size={1} style={{flex:1, flexDirection: 'column', height: 200}}>
+							<View style={{height: 200, flex: 1, justifyContent: 'center'}}>
+								<Image style={logo} source={require('./public/image/logo.png')} />
 							</View>
 						</Row>
-						<Row style={{flex: 1, flexDirection: 'column'}}>
+						<Row size={3} style={{flex: 1, flexDirection: 'column'}}>
 							<Card style={styles.cardContainer}>
 								{renderItems.map((item, idx) => (
 									<TouchableOpacity style={this.state.itemBkgColor[idx]} onPress={() => {

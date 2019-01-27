@@ -180,7 +180,7 @@ class Home extends Component {
 						<CardItem style={{justifyContent:"space-between"}}>
 							<Left>
 								<Icon style={spaceComponent}
-									name="md-create" />
+									name="md-flash" />
 							</Left>
 							<Right style={{flex: 1, flexDirection: 'column'}}>
 								<View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>

@@ -65,6 +65,12 @@ export const ACCIDENT_SENSITIVITY_LOW_DESC = 'It is suitable for people who trav
 export const EMERGENCY_CONTACT = 'Emergency Contacts';
 
 
+export const logo = {
+	width: '100%',
+	height:'50%',
+	resizeMode:'contain'
+};
+
 export const spaceComponent = {
 	marginLeft: 5,
 	marginRight: 5,
