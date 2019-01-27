@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
-import { TouchableOpacity, StyleSheet} from 'react-native'
+import { TouchableOpacity, StyleSheet, Alert } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 
 import { View, Container, Content, Body, Title,
-	Button, Text, Radio,
+	Text, Radio, CheckBox,
 	Left, Right,
-	Card, CardItem, Icon, Header, List, ListItem,
+	Card, CardItem, Icon,
 	Grid, Col, Row}
 	from 'native-base';
 
-import DivideLine from './components/DivideLine';
 import SwitchCard from './components/SwitchCard';
+import Permissions from 'react-native-permissions';
 
 import { vCenterRow, spaceComponent, wrapper,
 	COLOR_PRIMARY, COLOR_SECONDARY, COLOR_PRIMARY_DARK, COLOR_PRIAMRY_LIGHT,
@@ -22,15 +22,7 @@ import { vCenterRow, spaceComponent, wrapper,
 
 type Props = {};
 
-const contacts = [
-	{ name : 'Mom', number: '01012345678' },
-	{ name : 'Dad', number: '01012345678' },
-	{ name : 'Crew Leader', number: '01012345678' },
-];
-
 const HIGH = 0;
-const MID = 1;
-const LOW = 2;
 
 const levels = [
 	{
@@ -54,11 +46,48 @@ class Accident extends Component {
 
 		this.state = {
 			levelRadioSelected : [ true, false, false ],
-			curLevelIdx : HIGH
+			curLevel : HIGH,
+			contactsPermission: '',
+			contacts: [
+				{ name : 'Mom', number: '01012345678', checked: false},
+				{ name : 'Dad', number: '01012345678', checked: false },
+				{ name : 'Crew Leader', number: '01012345678', checked: false },
+			],
 		};
 
 		this.goToHome.bind(this);
 	}
+
+	componentDidMount() {
+		Permissions.check('contacts').then(response => {
+		// Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
+			this.setState({ contactsPermission: response })
+    	})
+	}
+
+	_requestPermission() {
+	    Permissions.request('contacts').then(response => {
+	    	// Returns once the user has chosen to 'allow' or to 'not allow' access
+	    	// Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
+			this.setState({ contactsPermission: response })
+	    })
+	}
+
+	_alertForPhotosPermission() {
+	    Alert.alert(
+			'Can we access your contacts?',
+			'We need access so you can set your contact',
+			[
+				{
+					text: 'No way',
+					onPress: () => console.log('Permission denied'),
+					style: 'cancel',
+				},
+				this.state.contactsPermission == 'undetermined'
+				? { text: 'OK', onPress: this._requestPermission }
+				: { text: 'Open Settings', onPress: Permissions.openSettings },
+			],
+		)}
 
 	goToHome() {
 		Actions.home();
@@ -94,13 +123,15 @@ class Accident extends Component {
 									<Row style={styles.levelContainer}>
 										<Radio onPress={() => {
 											if( this.state.curLevel != idx ) {
+												console.log('this.state.curLevel', this.state.curLevel);
+												console.log('idx', idx);
 												let changeSeleted = this.state.levelRadioSelected;
 												changeSeleted[idx] = true;
-												changeSeleted[this.state.curLevelIdx] = false;
+												changeSeleted[this.state.curLevel] = false;
 
 												this.setState({
 													levelRadioSelected : changeSeleted,
-													curLevelIdx: idx,
+													curLevel: idx,
 												});
 											}
 										}}
@@ -124,27 +155,40 @@ class Accident extends Component {
 								<View style={{flexWrap: "wrap"}}>
 									<Right>
 										<View style={{flex: 1, flexDirection: 'row'}}>
-											<Icon style={[spaceComponent, {color: 'white', marginRight: 15}]}
+											<Icon onPress={() => {
+												console.log('add touch');
+												if( this.state.contactsPermission == 'authorized' ) {
+
+												} else {
+													this._alertForPhotosPermission();
+												}
+											}} style={[spaceComponent, {color: 'white', marginRight: 15}]}
 												name="md-add" />
-											<Icon style={[spaceComponent, {color: 'white'}]}
-												name="md-checkmark" />
+											<Icon onPress={() => {
+												console.log('check touch');
+											}} style={[spaceComponent, {color: 'white'}]}
+												name="md-trash" />
 										</View>
 									</Right>
 								</View>
 							</View>
-							<DivideLine />
 						</CardItem>
 						<CardItem style={{flex: 1, flexDirection: 'column', backgroundColor: COLOR_PRIAMRY_LIGHT}}>
-							{contacts.map((item, idx) => (
+							{this.state.contacts.map((item, idx) => (
 								<View style={styles.contactsItem} >
 									<Left style={{flex: 1, flexDirection:'row'}}>
+										<CheckBox checked={item.checked} style={{marginRight: 25}} color={COLOR_SECONDARY} onPress={() => {
+											let changeContacts = this.state.contacts;
+											changeContacts[idx].checked = !item.checked;
+
+											this.setState({
+												contacts: changeContacts
+											});
+										}} />
 										<Text style={styles.levelTitle}>{item.name}</Text>
 									</Left>
-									<Body>
-										<Text style={styles.levelTitle}>{item.number}</Text>
-									</Body>
 									<Right>
-										<Text></Text>
+										<Text style={[styles.levelTitle, {marginRight: 50}]}>{item.number}</Text>
 									</Right>
 								</View>
 							))}
