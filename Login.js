@@ -41,7 +41,6 @@ const Login = () => {
 						<Text style={[styles.welcomeText, {fontSize: 22.5, color:'#ffffff'}]}>
 							Login to fully enjoy EIGHT’s features !
 						</Text>
-						<FBLogin />
 						<Button style={{marginTop: 25, marginBottom: 18, backgroundColor: '#3c5a99'}} primary block onPress={goToDiscover}>
 							<Grid>
 								<Col size={2} style={{marginLeft:10}}>

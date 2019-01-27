@@ -47,7 +47,6 @@ class Home extends Component {
 
 		this.goToPattern.bind(this);
 		this.goToAccident.bind(this);
-		this.goToGroup.bind(this);
 		this.showUpdateDlg.bind(this);
 	}
 
@@ -57,10 +56,6 @@ class Home extends Component {
 
 	goToAccident() {
 		Actions.accident();
-	}
-
-	goToGroup() {
-		Actions.group();
 	}
 
 	showUpdateDlg() {
@@ -222,31 +217,29 @@ class Home extends Component {
 								</TouchableOpacity>
 							</Col>
 							<Col>
-								<TouchableOpacity onPress={this.goToGroup}>
-									<View style={{paddingBottom: 5}}>
-										<Card style={styles.container}>
-											<CardItem style={styles.cardItem}>
-												<View style={{flex: 1,  flexDirection: 'column'}}>
-													<Text style={styles.cardTitle}>Icon</Text>
-												</View>
-											</CardItem>
-											<CardItem style={styles.cardItem}>
-												<View style={{flex: 1,  flexDirection: 'column'}}>
-													<Text style={styles.cardTitle}>{HOME_GROUP_SYNC}</Text>
-												</View>
-												<Switch value={this.state.lightSync}
-													style={{ transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] }}
-													onValueChange={
-														(value) => {
-															this.setState({
-																lightSync: value
-															});
-														}
-													} />
-											</CardItem>
-										</Card>
-									</View>
-								</TouchableOpacity>
+								<View style={{paddingBottom: 5}}>
+									<Card style={styles.container}>
+										<CardItem style={styles.cardItem}>
+											<View style={{flex: 1,  flexDirection: 'column'}}>
+												<Text style={styles.cardTitle}>Icon</Text>
+											</View>
+										</CardItem>
+										<CardItem style={styles.cardItem}>
+											<View style={{flex: 1,  flexDirection: 'column'}}>
+												<Text style={styles.cardTitle}>{HOME_GROUP_SYNC}</Text>
+											</View>
+											<Switch value={this.state.lightSync}
+												style={{ transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] }}
+												onValueChange={
+													(value) => {
+														this.setState({
+															lightSync: value
+														});
+													}
+												} />
+										</CardItem>
+									</Card>
+								</View>
 							</Col>
 						</Row>
 						<Row>
