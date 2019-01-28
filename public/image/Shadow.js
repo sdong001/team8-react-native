@@ -215,12 +215,15 @@ const cssString = ``;
 
 
 
-class Homer extends Component {
+class Shadow extends Component {
+	static propTypes = {
+		width: PropTypes.number,
+	}
 
 	constructor(props) {
 		super(props);
 
-		this.svgNode = ReactNativeSvgParser(svgString, cssString, {width:100, height:100, resizeMode: 'contain'})
+		this.svgNode = ReactNativeSvgParser(svgString, cssString, {width:this.props.width, height:this.props.height, resizeMode: 'contain'});
 	}
 
 	render() {
@@ -232,4 +235,4 @@ class Homer extends Component {
 	}
 }
 
-export default Homer
+export default Shadow

@@ -6,6 +6,8 @@ import { TouchableOpacity, StyleSheet } from 'react-native';
 
 import { vCenterRow } from '../style/common';
 
+import NumbericIcon from '../public/image/NumbericIcon';
+
 class NumbericRadioBtnsView extends Component {
 
 	constructor(props) {
@@ -34,7 +36,7 @@ class NumbericRadioBtnsView extends Component {
 	render() {
 		return (
 			<View style={vCenterRow}>
-				<Text style={{fontSize: 25}}>
+				<Text style={{fontSize: 25, marginRight: 15}}>
 					Mode
 				</Text>
 				{this.props.icons.map((item, idx) => (
@@ -53,7 +55,9 @@ class NumbericRadioBtnsView extends Component {
 							this.props.onValueChange(idx);
 						}
 					}}>
-						<Text style={this.state.btns[idx].btnStyle}>{idx}</Text>
+						<View style={{marginRight: 15}}>
+							<NumbericIcon number={idx}/>
+						</View>
 					</TouchableOpacity>
 				))}
 			</View>

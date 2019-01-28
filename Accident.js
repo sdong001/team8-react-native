@@ -10,7 +10,6 @@ import { View, Container, Content,
 	from 'native-base';
 
 import SwitchCard from './components/SwitchCard';
-import Permissions from 'react-native-permissions';
 
 import { flexColumn, flexRow, spaceComponent,
 	COLOR_PRIMARY, COLOR_SECONDARY, COLOR_PRIMARY_DARK, COLOR_PRIAMRY_LIGHT,
@@ -59,37 +58,6 @@ class Accident extends Component {
 
 		this.goToHome.bind(this);
 	}
-
-	componentDidMount() {
-		Permissions.check('contacts').then(response => {
-		// Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
-			this.setState({ contactsPermission: response })
-    	})
-	}
-
-	_requestPermission() {
-	    Permissions.request('contacts').then(response => {
-	    	// Returns once the user has chosen to 'allow' or to 'not allow' access
-	    	// Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
-			this.setState({ contactsPermission: response })
-	    })
-	}
-
-	_alertForPhotosPermission() {
-	    Alert.alert(
-			'Can we access your contacts?',
-			'We need access so you can set your contact',
-			[
-				{
-					text: 'No way',
-					onPress: () => console.log('Permission denied'),
-					style: 'cancel',
-				},
-				this.state.contactsPermission == 'undetermined'
-				? { text: 'OK', onPress: this._requestPermission }
-				: { text: 'Open Settings', onPress: Permissions.openSettings },
-			],
-		)}
 
 	goToHome() {
 		Actions.home();
@@ -156,12 +124,7 @@ class Accident extends Component {
 									<Right>
 										<View style={flexRow}>
 											<Icon onPress={() => {
-												console.log('add touch');
-												if( this.state.contactsPermission == 'authorized' ) {
-
-												} else {
-													this._alertForPhotosPermission();
-												}
+												this.goToHome();
 											}} style={[spaceComponent, {color: 'white', marginRight: 15}]}
 												name="md-add" />
 											<Icon onPress={() => {

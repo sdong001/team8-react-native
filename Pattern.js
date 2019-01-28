@@ -16,6 +16,7 @@ import SwitchCard from './components/SwitchCard';
 const deviceSize = Dimensions.get('window');
 
 import Light from './public/image/Light';
+import Shadow from './public/image/Shadow';
 
 import { flexColumn, flexRow, vCenterRow, spaceComponent, spaceRowTop, spaceRowBottom,
 	COLOR_PRIMARY, COLOR_PRIAMRY_LIGHT, COLOR_SECONDARY, MODIFY_MODE,
@@ -96,7 +97,7 @@ class Pattern extends Component {
 									</View>
 								</Row>
 								<Row size={2}>
-									<Slider thumbTintColor={'white'} value={0.5} style={[styles.flatSlider, styles.speedMargin]} />
+									<Slider value={0.5} style={[styles.flatSlider, styles.speedMargin]} />
 								</Row>
 							</Col>
 						</Grid>
@@ -115,7 +116,7 @@ class Pattern extends Component {
 					<View style={spaceRowBottom}>
 						<View style={{alignItems:'center'}}>
 							<View style={{backgroundColor: 'yellow', opacity: this.state.brightShadowOpa, position: 'absolute'}}>
-								<Light width={deviceSize.width / 2} height={deviceSize.width / 2} />
+								<Shadow width={deviceSize.width / 2} height={deviceSize.width / 2} />
 							</View>
 							<Light width={deviceSize.width / 2} height={deviceSize.width / 2} />
 						</View>
