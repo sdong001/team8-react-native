@@ -8,9 +8,9 @@
 
 | login | discover | main |
 | - | - | - |
-| ![main](screenshots/login.jpeg "login")| ![main](screenshots/discover.jpeg "discover") | ![main](screenshots/main.jpeg "main") |
+| ![main](screenshots/login.jpeg "login")| ![main](screenshots/discover.jpeg "discover") | ![main](screenshots/home.jpeg "home") |
 
 
 | firmware | pattern | accident |
 | - | - | - |
-| ![main](intro/dialog.jpeg "dialog")| ![main](intro/pattern.jpeg "pattern") | ![main](intro/accident.jpeg "accident") |
+| ![main](screenshots/dialog.jpeg "dialog")| ![main](screenshots/pattern.jpeg "pattern") | ![main](screenshots/accident.jpeg "accident") |
