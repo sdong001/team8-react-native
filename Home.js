@@ -13,6 +13,7 @@ import ProgressCircle from 'react-native-progress-circle';
 import SvgUri from 'react-native-svg-uri';
 
 import DivideLine from './components/DivideLine';
+import BatteryTick from './components/BatteryTick';
 
 import { COLOR_PRIMARY, COLOR_SECONDARY, COLOR_PRIMARY_DARK, COLOR_PRIAMRY_LIGHT,
  	DIALOG_OK, DIALOG_CLOSE,
@@ -22,7 +23,7 @@ import { COLOR_PRIMARY, COLOR_SECONDARY, COLOR_PRIMARY_DARK, COLOR_PRIAMRY_LIGHT
 	flexColumn, flexRow, vCenterRow, spaceComponent }
 from './style/common';
 
-// import Homer from './public/image/battery2.svg';
+import Homer from './public/image/Homer';
 
 const deviceSize = Dimensions.get('window');
 
@@ -100,16 +101,11 @@ class Home extends Component {
 	componentWillUnmount() {
 		this.homeBackPressHandler.remove();
 	}
-	// <SvgUri
-	// 	width="200"
-	// 	height="200"
-	// 	svgXmlData={Homer}
-	// 	/>
+
 	render() {
 		return (
 			<Container>
 				<Content padder>
-
 					<View style={{flex: 1, flexDirection: 'row'}}>
 						<Text style={styles.titleText}>
 							{APP_NAME}
@@ -164,10 +160,8 @@ class Home extends Component {
 								</Col>
 								<Col size={1}>
 									<View style={{alignItems: 'center'}}>
-										<Icon style={spaceComponent}
-											name="md-battery-charging" />
+										<BatteryTick tick={0} />
 									</View>
-
 								</Col>
 							</Grid>
 						</CardItem>
@@ -176,8 +170,13 @@ class Home extends Component {
 					<Card>
 						<CardItem style={{justifyContent:"space-between"}}>
 							<Left>
-								<Icon style={spaceComponent}
-									name="md-flash" />
+								{this.state.lightToggle &&
+									<Homer />
+								}
+								{!this.state.lightToggle &&
+									<Icon style={spaceComponent}
+										name="md-flash" />
+								}
 							</Left>
 							<Right style={flexColumn}>
 								<View style={[flexRow, {alignItems: 'center'}]}>

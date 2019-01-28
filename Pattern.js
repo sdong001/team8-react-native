@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet, TouchableOpacity, Slider } from 'react-native'
+import { StyleSheet, TouchableOpacity, Slider, Dimensions } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 
 import { View, Container, Content, Body, Title,
@@ -13,13 +13,19 @@ import DivideLine from './components/DivideLine';
 import NumbericRadioBtnsView from './components/NumbericRadioBtnsView';
 import SwitchCard from './components/SwitchCard';
 
+const deviceSize = Dimensions.get('window');
+
+import Light from './public/image/Light';
+
 import { flexColumn, flexRow, vCenterRow, spaceComponent, spaceRowTop, spaceRowBottom,
-	COLOR_PRIMARY, COLOR_PRIAMRY_LIGHT, COLOR_SECONDARY,
+	COLOR_PRIMARY, COLOR_PRIAMRY_LIGHT, COLOR_SECONDARY, MODIFY_MODE,
  	BRIGHTNESS, BREAK_LIGHT, SYNC_LED_TEXT, OUTER_LED_TEXT, INNER_LED_TEXT, PATTERN_CIRCLE, SYNC_BOTH,
 	SPPED_ADJUST,
 } from './style/common';
 
 type Props = {};
+
+const shadowOriginSize = deviceSize.width / 2;
 
 class Pattern extends Component {
 	constructor(props) {
@@ -37,11 +43,13 @@ class Pattern extends Component {
 			syncToggle: false, // be set from device
 			breakToggle: false, // be set from device
 			brightness: 0.4, // be set from device
+			brightShadowOpa: 0.4,
 			outerPattern: 0, // be set from device
 			outerBtnBkg: this.patternBkg,
 			innerPattern: 0, // be set from device
 			innerBtnBkg: this.patternBkg,
-			modeName: 'Modify Mode 1', // be set from device
+			modeIdx: 1,
+			modeName: MODIFY_MODE + 1, // be set from device
 		};
 
 		this.goToHome.bind(this);
@@ -88,7 +96,7 @@ class Pattern extends Component {
 									</View>
 								</Row>
 								<Row size={2}>
-									<Slider value={0.5} style={[styles.flatSlider, styles.speedMargin]} />
+									<Slider thumbTintColor={'white'} value={0.5} style={[styles.flatSlider, styles.speedMargin]} />
 								</Row>
 							</Col>
 						</Grid>
@@ -105,18 +113,23 @@ class Pattern extends Component {
 			<Container>
 				<Content padder>
 					<View style={spaceRowBottom}>
-						<Icon style={[styles.brightOptions]} name />
+						<View style={{alignItems:'center'}}>
+							<View style={{backgroundColor: 'yellow', opacity: this.state.brightShadowOpa, position: 'absolute'}}>
+								<Light width={deviceSize.width / 2} height={deviceSize.width / 2} />
+							</View>
+							<Light width={deviceSize.width / 2} height={deviceSize.width / 2} />
+						</View>
+
 						<Text style={[styles.brightOptions, {fontSize: 17}]}>{BRIGHTNESS}</Text>
-						<Text style={[styles.brightOptions, {fontSize: 23}]}>40%</Text>
+						<Text style={[styles.brightOptions, {fontSize: 23}]}>{Math.floor(this.state.brightShadowOpa * 100)}%</Text>
 						<Grid>
 							<Col size={1} />
 							<Col size={2} >
-								<Slider value={this.state.brightness} size={0.5} style={
-									{
-										flex: 1,
-										flexDirection: 'row',
-									}
-								} />
+								<Slider value={this.state.brightness} size={0.5} style={flexRow} onValueChange={(val) => {
+									this.setState({
+										brightShadowOpa: val,
+									});
+								}}/>
 							</Col>
 							<Col size={1} />
 						</Grid>
@@ -146,7 +159,12 @@ class Pattern extends Component {
 										"ios-paw",
 										"ios-paw",
 										"ios-paw"
-									]} />
+									]} onValueChange={(idx) => {
+										this.setState({
+											modeIdx: idx,
+											modeName: MODIFY_MODE + (idx + 1),
+										});
+									}}/>
 							</View>
 						</Col>
 						<Col size={1} />

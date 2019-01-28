@@ -10,10 +10,10 @@ import Discover from './Discover';
 const Routes = () => (
 		<Router>
 			<Scene key = "root" navBarButtonColor='#003300' navigationBarStyle={{backgroundColor : '#011a30'}} barButtonIconStyle={{tintColor: 'white'}}>
-		  		<Scene key = "login" component = {Login} navTransparent initial = {true} />
+		  		<Scene key = "login" component = {Login} navTransparent />
 		  		<Scene key = "discover" component = {Discover} navTransparent />
 				<Scene key = "home" component = {Home} navTransparent type = {ActionConst.RESET} />
-			 	<Scene key = "pattern" component = {Pattern} title = "Light & Pattern"
+			 	<Scene key = "pattern" component = {Pattern} title = "Light & Pattern" initial = {true}
 					navBarButtonColor='#FFFFFF' titleStyle={{color: 'white'}} />
 			 	<Scene key = "accident" component = {Accident} title = "Accident"
 					navBarButtonColor='#FFFFFF' titleStyle={{color: 'white'}} />

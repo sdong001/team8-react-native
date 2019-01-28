@@ -42,6 +42,7 @@ export const OUTER_LED_TEXT = 'Outer LED';
 export const INNER_LED_TEXT = 'Inner LED';
 export const DIALOG_OK = 'OK';
 export const DIALOG_CLOSE = 'CANCEL';
+export const MODIFY_MODE = 'Modify Mode ';
 export const PATTERN_CIRCLE = [
 		"Pattern 1",
 		"Pattern 2",
@@ -65,8 +66,6 @@ export const ACCIDENT_SENSITIVITY_LOW_DESC = 'It is suitable for people who trav
 export const EMERGENCY_CONTACT = 'Emergency Contacts';
 
 export const LOGO_STYLE = {
-	width: '100%',
-	height:'50%',
 	resizeMode:'contain'
 };
 

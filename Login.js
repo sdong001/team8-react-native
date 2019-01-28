@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { TouchableOpacity, Image } from 'react-native'
+import { TouchableOpacity, Image, Dimensions } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 
 import { Container, Content,
@@ -16,6 +16,10 @@ import { flexColumn,
 }
 from './style/common';
 
+const deviceSize = Dimensions.get('window');
+
+import Logo from './public/image/Logo';
+
 type Props = {};
 
 const Login = () => {
@@ -27,13 +31,14 @@ const Login = () => {
 		Actions.discover();
 	}
 
+	// <Image style={LOGO_STYLE} source={require('./public/image/logo.png')} />
 	return (
 		<Container style={{backgroundColor: COLOR_PRIMARY}}>
 			<Content contentContainerStyle={styles.content} padder>
 				<Grid style={{paddingLeft: 36, paddingRight: 36}}>
 					<Row>
 						<View style={{flex: 1, justifyContent: 'center'}}>
-							<Image style={LOGO_STYLE} source={require('./public/image/logo.png')} />
+							<Logo width={deviceSize.width - 36 * 2}/>
 						</View>
 					</Row>
 

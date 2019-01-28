@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { TouchableOpacity, Image } from 'react-native'
+import { TouchableOpacity, Image, Dimensions } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 
 import { View, Container, Content, Body,
@@ -7,12 +7,16 @@ import { View, Container, Content, Body,
 	Grid, Row}
 	from 'native-base';
 
+const deviceSize = Dimensions.get('window');
+
 import { flexColumn,
 	COLOR_PRIMARY, COLOR_PRIMARY_DARK, COLOR_SECONDARY,
  	NOT_PAIRED,
 	LOGO_STYLE
 }
 from './style/common';
+
+import Logo from './public/image/Logo';
 
 type Props = {};
 
@@ -49,7 +53,7 @@ class Discover extends Component {
 					<Grid style={{paddingLeft: 36, paddingRight: 36}}>
 						<Row size={1} style={flexColumn}>
 							<View style={{flex: 1, justifyContent: 'center'}}>
-								<Image style={LOGO_STYLE} source={require('./public/image/logo.png')} />
+								<Logo width={deviceSize.width - 36 * 2}/>
 							</View>
 						</Row>
 						<Row size={3} style={flexColumn}>

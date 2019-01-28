@@ -28,6 +28,7 @@ class NumbericRadioBtnsView extends Component {
 
 	static propTypes = {
 		icons: PropTypes.array.isRequired,
+		onValueChange: PropTypes.function,
 	}
 
 	render() {
@@ -38,8 +39,6 @@ class NumbericRadioBtnsView extends Component {
 				</Text>
 				{this.props.icons.map((item, idx) => (
 					<TouchableOpacity onPress={() => {
-						console.log('idx', idx);
-						console.log('this.state.curEnableBtnIdx', this.state.curEnableBtnIdx);
 						if( this.state.curEnableBtnIdx != idx ) {
 							let changeBtns = this.state.btns;
 
@@ -50,6 +49,8 @@ class NumbericRadioBtnsView extends Component {
 								btns: changeBtns,
 								curEnableBtnIdx: idx,
 							});
+
+							this.props.onValueChange(idx);
 						}
 					}}>
 						<Text style={this.state.btns[idx].btnStyle}>{idx}</Text>

@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^9.0.0",
+    "@target-corp/react-native-svg-parser": "^1.0.6",
     "native-base": "^2.10.0",
     "react": "16.6.3",
     "react-native": "0.57.8",
