@@ -3,7 +3,7 @@ import { TouchableOpacity, Image } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 
 import { View, Container, Content, Body,
-	Card, CardItem, Icon,
+	Text, Card, CardItem, Icon,
 	Grid, Row}
 	from 'native-base';
 

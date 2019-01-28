@@ -9,7 +9,8 @@ import { View, Container, Content, Body, Title,
 	Grid, Col, Row }
 	from 'native-base';
 import Dialog, { DialogTitle, DialogButton, DialogContent } from 'react-native-popup-dialog';
-import ProgressCircle from 'react-native-progress-circle'
+import ProgressCircle from 'react-native-progress-circle';
+import SvgUri from 'react-native-svg-uri';
 
 import DivideLine from './components/DivideLine';
 
@@ -18,7 +19,10 @@ import { COLOR_PRIMARY, COLOR_SECONDARY, COLOR_PRIMARY_DARK, COLOR_PRIAMRY_LIGHT
 	APP_NAME, AUTO_CONNECT, DISCOVERABLE, LIGHT_ON, LIGHT_OFF,
 	HOME_LIGHT_PATTERN, HOME_GROUP_SYNC, HOME_ACCIDENT_ALERT, HOME_FIRMWARE_UPDATE, FIRMWARE_NEED_UPDATE,
 	FIRMWARE_UPDATE_VER, FIRMWARE_CURRENT_VER, FIRMWARE_UPDATE_WAITING,
-	flexColumn, flexRow, vCenterRow, spaceComponent } from './style/common';
+	flexColumn, flexRow, vCenterRow, spaceComponent }
+from './style/common';
+
+// import Homer from './public/image/battery2.svg';
 
 const deviceSize = Dimensions.get('window');
 
@@ -96,11 +100,16 @@ class Home extends Component {
 	componentWillUnmount() {
 		this.homeBackPressHandler.remove();
 	}
-
+	// <SvgUri
+	// 	width="200"
+	// 	height="200"
+	// 	svgXmlData={Homer}
+	// 	/>
 	render() {
 		return (
 			<Container>
 				<Content padder>
+
 					<View style={{flex: 1, flexDirection: 'row'}}>
 						<Text style={styles.titleText}>
 							{APP_NAME}

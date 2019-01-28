@@ -64,9 +64,6 @@ export const ACCIDENT_SENSITIVITY_MEDIUM_DESC = 'It is suitable for occasional p
 export const ACCIDENT_SENSITIVITY_LOW_DESC = 'It is suitable for people who travel at high speeds with bad road conditions.';
 export const EMERGENCY_CONTACT = 'Emergency Contacts';
 
-// image
-export const LOGO = './public/image/logo.png';
-
 export const LOGO_STYLE = {
 	width: '100%',
 	height:'50%',

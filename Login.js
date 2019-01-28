@@ -12,7 +12,8 @@ import { Container, Content,
 // import FacebookLogin from './components/FacebookLogin';
 
 import { flexColumn,
-	COLOR_PRIMARY, LOGO_STYLE }
+	COLOR_PRIMARY, LOGO_STYLE,
+}
 from './style/common';
 
 type Props = {};
