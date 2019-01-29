@@ -11,6 +11,10 @@
 | ![main](screenshots/login.jpeg "login")| ![main](screenshots/discover.jpeg "discover") | ![main](screenshots/home.jpeg "home") |
 
 
-| firmware | pattern | accident |
+| pattern | pattern | accident |
 | - | - | - |
-| ![main](screenshots/dialog.jpeg "dialog")| ![main](screenshots/pattern.jpeg "pattern") | ![main](screenshots/accident.jpeg "accident") |
+| ![main](screenshots/pattern_1.jpeg "pattern 1")| ![main](screenshots/pattern_2.jpeg "pattern 2") | ![main](screenshots/accident.jpeg "accident") |
+
+| contact | firmware | x |
+| - | - | - |
+| ![main](screenshots/contact.jpeg "contact")| ![main](screenshots/firmware.jpeg "firmware") ||
