@@ -15,8 +15,8 @@ import SwitchCard from './components/SwitchCard';
 
 const deviceSize = Dimensions.get('window');
 
-import Light from './public/image/Light';
-import Shadow from './public/image/Shadow';
+import Light from './public/icon/Light';
+import Shadow from './public/icon/Shadow';
 
 import { flexColumn, flexRow, vCenterRow, spaceComponent, spaceRowTop, spaceRowBottom,
 	COLOR_PRIMARY, COLOR_PRIAMRY_LIGHT, COLOR_SECONDARY, MODIFY_MODE,
@@ -114,11 +114,11 @@ class Pattern extends Component {
 			<Container>
 				<Content padder>
 					<View style={spaceRowBottom}>
-						<View style={{alignItems:'center'}}>
-							<View style={{backgroundColor: 'yellow', opacity: this.state.brightShadowOpa, position: 'absolute'}}>
+						<View style={{alignItems:'center', marginTop: deviceSize.width / 8}}>
+							<View style={{opacity: this.state.brightShadowOpa, position: 'absolute', top: -deviceSize.width / 8}}>
 								<Shadow width={deviceSize.width / 2} height={deviceSize.width / 2} />
 							</View>
-							<Light width={deviceSize.width / 2} height={deviceSize.width / 2} />
+							<Light width={deviceSize.width / 4} height={deviceSize.width / 4} />
 						</View>
 
 						<Text style={[styles.brightOptions, {fontSize: 17}]}>{BRIGHTNESS}</Text>

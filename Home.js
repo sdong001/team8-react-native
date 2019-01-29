@@ -23,7 +23,11 @@ import { COLOR_PRIMARY, COLOR_SECONDARY, COLOR_PRIMARY_DARK, COLOR_PRIAMRY_LIGHT
 	flexColumn, flexRow, vCenterRow, spaceComponent }
 from './style/common';
 
-import Homer from './public/image/Homer';
+import MainLight from './public/icon/MainLight';
+import MainAccident from './public/icon/MainAccident';
+import MainGroup from './public/icon/MainGroup';
+import LightOn from './public/icon/LightOn';
+import LightOff from './public/icon/LightOff';
 
 const deviceSize = Dimensions.get('window');
 
@@ -38,11 +42,15 @@ class Home extends Component {
 			updatePercent: 88, // be set from device
 			autoConnectToggle : false, // be set from device
 			discoverableToggle: false, // be set from device
-			lightToggle: false, // be set from device
-			lightSync: false, // be set from device
-			lightState: LIGHT_OFF, // be set from device
+			lightToggle: false,
+			lightSync: false,
+			lightBkg: COLOR_PRIMARY,
+			lightState: LIGHT_OFF,
+			lightBorder: COLOR_PRIMARY,
+			lightTextColor: 'white',
 			updateVersion: '00.01', // be set from device
 			currentVersion: '00.00', // be set from device
+			batteryTick: 7, // be set from device
 		};
 
 		this.goToPattern.bind(this);
@@ -160,7 +168,7 @@ class Home extends Component {
 								</Col>
 								<Col size={1}>
 									<View style={{alignItems: 'center'}}>
-										<BatteryTick tick={0} />
+										<BatteryTick tick={this.state.batteryTick} />
 									</View>
 								</Col>
 							</Grid>
@@ -168,27 +176,32 @@ class Home extends Component {
 					</Card>
 
 					<Card>
-						<CardItem style={{justifyContent:"space-between"}}>
-							<Left>
+						<CardItem style={{justifyContent:"space-between", borderColor: this.state.lightBorder, borderWidth: 2, backgroundColor: this.state.lightBkg }}>
+							<Left style={{marginLeft: 30}}>
 								{this.state.lightToggle &&
-									<Homer />
+									<LightOn />
 								}
 								{!this.state.lightToggle &&
-									<Icon style={spaceComponent}
-										name="md-flash" />
+									<LightOff />
 								}
 							</Left>
 							<Right style={flexColumn}>
 								<View style={[flexRow, {alignItems: 'center'}]}>
-									<Text style={styles.lightStateText}>{this.state.lightState}</Text>
+									<Text style={[styles.lightStateText, {color: this.state.lightTextColor}]}>{this.state.lightState}</Text>
 									<Switch value={this.state.lightToggle}
 										onValueChange={
 											(value) => {
 												let lightChange = this.state.lightToggle ? LIGHT_OFF : LIGHT_ON;
+												const changeBkg = this.state.lightToggle ? COLOR_PRIMARY : 'white';
+												const changeBorder = this.state.lightToggle ? COLOR_PRIMARY : COLOR_PRIAMRY_LIGHT;
+												const changeTextColor = this.state.lightToggle ? 'white' : 'black';
 
 												this.setState({
 													lightToggle: value,
-													lightState: lightChange
+													lightState: lightChange,
+													lightBkg: changeBkg,
+													lightBorder: changeBorder,
+													lightTextColor: changeTextColor
 												});
 											}
 										} />
@@ -203,8 +216,8 @@ class Home extends Component {
 									<View style={{paddingRight: 10, paddingBottom: 5}}>
 										<Card style={styles.container}>
 											<CardItem style={styles.cardItem}>
-												<View style={flexColumn}>
-													<Text style={styles.cardTitle}>Icon</Text>
+												<View style={[flexColumn, {alignItems: 'center'}]}>
+													<MainLight />
 												</View>
 											</CardItem>
 											<CardItem style={styles.cardItem}>
@@ -220,22 +233,33 @@ class Home extends Component {
 								<View style={{paddingBottom: 5}}>
 									<Card style={styles.container}>
 										<CardItem style={styles.cardItem}>
-											<View style={flexColumn}>
-												<Text style={styles.cardTitle}>Icon</Text>
+											<View style={[flexColumn, {alignItems: 'center'}]}>
+												<MainGroup />
 											</View>
 										</CardItem>
-										<CardItem style={styles.cardItem}>
-											<View style={flexColumn}>
-												<Text style={styles.cardTitle}>{HOME_GROUP_SYNC}</Text>
+										<CardItem style={[flexColumn, styles.cardItem]}>
+											<Grid style={[{alignItems: 'center'}]}>
+												<Row>
+													<Text style={[styles.cardTitle, {height:50}]}>{HOME_GROUP_SYNC}</Text>
+												</Row>
+												<Row>
+													<Switch style={{marginTop: 40}} value={this.state.lightSync}
+														onValueChange={
+															(value) => {
+																this.setState({
+																	lightSync: value
+																});
+															}
+														} />
+												</Row>
+											</Grid>
+											<View style={flexRow}>
+
 											</View>
-											<Switch value={this.state.lightSync}
-												onValueChange={
-													(value) => {
-														this.setState({
-															lightSync: value
-														});
-													}
-												} />
+											<View style={flexRow}>
+
+
+											</View>
 										</CardItem>
 									</Card>
 								</View>
@@ -247,8 +271,8 @@ class Home extends Component {
 									<View style={{paddingRight: 10, paddingBottom: 10}}>
 										<Card style={styles.container}>
 											<CardItem style={styles.cardItem}>
-												<View style={flexColumn}>
-													<Text style={styles.cardTitle}>Icon</Text>
+												<View style={[flexColumn, {alignItems: 'center'}]}>
+													<MainAccident />
 												</View>
 											</CardItem>
 											<CardItem style={styles.cardItem}>
@@ -270,7 +294,7 @@ class Home extends Component {
 														<Text style={styles.firmwareTitle}>{HOME_FIRMWARE_UPDATE}</Text>
 													</View>
 												</Row>
-												<Row size={2} style={{backgroundColor: COLOR_PRIAMRY_LIGHT, justifyContent: 'center'}}>
+												<Row size={2} style={{backgroundColor: COLOR_PRIAMRY_LIGHT, justifyContent: 'center', width: '100%'}}>
 													<Grid style={{padding: 15}}>
 														<Row>
 															<Left>
@@ -353,6 +377,8 @@ const styles = StyleSheet.create({
 		flex: 1,
 		height: deviceSize.width / 2 - 20,
 		backgroundColor: COLOR_PRIMARY,
+		justifyContent: 'center',
+		alignItems: 'center'
 	},
 
 	cardItem: {

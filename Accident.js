@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Platform, PermissionsAndroid, StyleSheet, Alert } from 'react-native'
+import { Platform, PermissionsAndroid, StyleSheet, Alert, Switch } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 
 import { View, Container, Content,
@@ -11,11 +11,12 @@ import { View, Container, Content,
 import Dialog, { DialogTitle, DialogButton, DialogContent } from 'react-native-popup-dialog';
 
 import SwitchCard from './components/SwitchCard';
+import DivideLine from './components/DivideLine';
 
 import { flexColumn, flexRow, spaceComponent,
 	DIALOG_OK, DIALOG_CLOSE,
 	COLOR_PRIMARY, COLOR_SECONDARY, COLOR_PRIMARY_DARK, COLOR_PRIAMRY_LIGHT,
-	ACCIDENT_SENSITIVITY_INFO, ACCIDENT_ALERT_TOGGLE, ACCIDENT_ALERT_INFO, ACCIDENT_SENSITIVITY_LABEL,
+	ACCIDENT_SENSITIVITY_INFO, ACCIDENT_ALERT_ON, ACCIDENT_ALERT_OFF, ACCIDENT_ALERT_INFO, ACCIDENT_SENSITIVITY_LABEL,
 	ACCIDENT_SENSITIVITY_HIGH, ACCIDENT_SENSITIVITY_MEDIUM, ACCIDENT_SENSITIVITY_LOW,
 	ACCIDENT_SENSITIVITY_HIGH_DESC, ACCIDENT_SENSITIVITY_MEDIUM_DESC, ACCIDENT_SENSITIVITY_LOW_DESC,
 	EMERGENCY_CONTACT
@@ -51,30 +52,26 @@ class Accident extends Component {
 
 		this.state = {
 			levelRadioSelected : [ true, false, false ], // be set from device
-			curLevel : HIGH,
-			contactsPermission: '',
+			curLevel : HIGH, // be set from devcie
 			contacts: [
 				{ name : 'Mom', number: '01012345678', checked: false},
 				{ name : 'Dad', number: '01012345678', checked: false },
 				{ name : 'Crew Leader', number: '01012345678', checked: false },
-			],
+			], // save app
 			contactDialogToggle: false,
 			contactDlgName: '',
 			contactDlgNumber: '',
+			alertToggle: false, // be set from devcie
+			alertCardBkg: COLOR_PRIMARY,
+			alertCardBorder: COLOR_PRIMARY,
+			alertState: ACCIDENT_ALERT_ON,
+			alertTextColor: 'white',
 		};
 
 		this.addContactsFromDlg.bind(this);
 	}
 
 	componentDidMount() {
-		const requsetPerm = Platform.select({
-			ios: () => {
-
-			},
-			android: () => {
-
-			}
-		})();
 
 	}
 
@@ -100,10 +97,44 @@ class Accident extends Component {
 		return (
 			<Container>
 				<Content padder>
-					<SwitchCard
-						title={ACCIDENT_ALERT_TOGGLE}
-						titleStyle={styles.cardTitle}
-						cardBkgColor={COLOR_PRIMARY} />
+
+					<Card>
+						<CardItem style={{justifyContent:"space-between", backgroundColor: this.state.alertCardBkg, borderWidth: 2, borderColor: this.state.alertCardBorder}}>
+							<Left style={{marginLeft: 10}}>
+								{this.state.alertToggle &&
+									<Icon style={{color: '#ffd460'}}
+										name="md-notifications" />
+								}
+								{!this.state.alertToggle &&
+									<Icon style={{color: '#ffd460'}}
+										name="md-notifications-off" />
+								}
+							</Left>
+							<Right>
+								<View style={[flexRow, {alignItems: 'center'}]}>
+									<Text style={[styles.cardTitle, {color: this.state.alertTextColor, marginRight: 25}]}>{this.state.alertState}</Text>
+									<Switch value={this.state.alertToggle}
+										style={{ transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] }}
+										onValueChange={
+											(value) => {
+												let accChange = this.state.alertToggle ? ACCIDENT_ALERT_OFF : ACCIDENT_ALERT_ON;
+												const changeBkg = this.state.alertToggle ? COLOR_PRIMARY : 'white';
+												const changeBorder = this.state.alertToggle ? COLOR_PRIMARY : COLOR_PRIAMRY_LIGHT;
+												const changeTextColor = this.state.alertToggle ? 'white' : 'black';
+
+												this.setState({
+													alertToggle: value,
+													alertState: accChange,
+													alertCardBkg: changeBkg,
+													alertCardBorder: changeBorder,
+													alertTextColor: changeTextColor
+												});
+											}
+										} />
+								</View>
+							</Right>
+						</CardItem>
+					</Card>
 
 					<Text style={{marginTop: 10, marginBottom: 25}}>
 						{ACCIDENT_ALERT_INFO}
@@ -193,10 +224,10 @@ class Accident extends Component {
 												contacts: changeContacts
 											});
 										}} />
-										<Text style={styles.levelTitle}>{item.name}</Text>
+										<Text style={styles.contactText}>{item.name}</Text>
 									</Left>
 									<Right>
-										<Text style={[styles.levelTitle, {marginRight: 50}]}>{item.number}</Text>
+										<Text style={[styles.contactText, {marginRight: 50}]}>{item.number}</Text>
 									</Right>
 								</View>
 							))}
@@ -271,6 +302,12 @@ const styles = StyleSheet.create({
 	},
 
 	levelTitle: {
+		color: 'white',
+		fontWeight: 'bold',
+		fontSize: 17,
+	},
+
+	contactText: {
 		color: 'white',
 		fontSize: 17,
 	},

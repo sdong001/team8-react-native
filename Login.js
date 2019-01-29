@@ -11,14 +11,14 @@ import { Container, Content,
 // var { FBLogin, FBLoginManager } = require('react-native-facebook-login');
 // import FacebookLogin from './components/FacebookLogin';
 
-import { flexColumn,
+import { flexColumn, flexRow,
 	COLOR_PRIMARY, LOGO_STYLE,
 }
 from './style/common';
 
 const deviceSize = Dimensions.get('window');
 
-import Logo from './public/image/Logo';
+import Logo from './public/icon/Logo';
 
 type Props = {};
 
@@ -36,9 +36,10 @@ const Login = () => {
 		<Container style={{backgroundColor: COLOR_PRIMARY}}>
 			<Content contentContainerStyle={styles.content} padder>
 				<Grid style={{paddingLeft: 36, paddingRight: 36}}>
+					<Row />
 					<Row>
-						<View style={{flex: 1, justifyContent: 'center'}}>
-							<Logo width={deviceSize.width - 36 * 2}/>
+						<View style={[flexRow, {justifyContent: 'center', alignItems: 'center'}]}>
+							<Logo width={deviceSize.width /2 }/>
 						</View>
 					</Row>
 
@@ -72,6 +73,8 @@ const Login = () => {
 							</Grid>
 						</Button>
 					</Row>
+					<Row />
+					<Row />
 				</Grid>
 			</Content>
 		</Container>

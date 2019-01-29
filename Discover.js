@@ -9,14 +9,14 @@ import { View, Container, Content, Body,
 
 const deviceSize = Dimensions.get('window');
 
-import { flexColumn,
+import { flexColumn, flexRow,
 	COLOR_PRIMARY, COLOR_PRIMARY_DARK, COLOR_SECONDARY,
  	NOT_PAIRED,
 	LOGO_STYLE
 }
 from './style/common';
 
-import Logo from './public/image/Logo';
+import Logo from './public/icon/Logo';
 
 type Props = {};
 
@@ -51,12 +51,12 @@ class Discover extends Component {
 			<Container style={{backgroundColor: COLOR_PRIMARY}}>
 				<Content contentContainerStyle={styles.content} padder>
 					<Grid style={{paddingLeft: 36, paddingRight: 36}}>
-						<Row size={1} style={flexColumn}>
-							<View style={{flex: 1, justifyContent: 'center'}}>
-								<Logo width={deviceSize.width - 36 * 2}/>
+						<Row>
+							<View style={[flexRow, {justifyContent: 'center', alignItems: 'center'}]}>
+								<Logo width={deviceSize.width /2 }/>
 							</View>
 						</Row>
-						<Row size={3} style={flexColumn}>
+						<Row style={flexColumn}>
 							<Card style={styles.cardContainer}>
 								{renderItems.map((item, idx) => (
 									<TouchableOpacity style={this.state.itemBkgColor[idx]} onPress={() => {
@@ -83,6 +83,8 @@ class Discover extends Component {
 								))}
 							</Card>
 						</Row>
+						<Row />
+						<Row />
 					</Grid>
 				</Content>
 			</Container>

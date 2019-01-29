@@ -19,9 +19,9 @@ export const AUTO_CONNECT = 'Auto Connect';
 export const DISCOVERABLE = 'Discoverable';
 export const LIGHT_ON = 'Light ON';
 export const LIGHT_OFF = 'Light OFF';
-export const HOME_LIGHT_PATTERN = 'Light & \nPattern';
-export const HOME_GROUP_SYNC = 'Group\nSync';
-export const HOME_ACCIDENT_ALERT = 'Accident\nAlert';
+export const HOME_LIGHT_PATTERN = 'Light & Pattern';
+export const HOME_GROUP_SYNC = 'Group Sync';
+export const HOME_ACCIDENT_ALERT = 'Accident Alert';
 export const HOME_FIRMWARE_UPDATE = 'Firmware Update';
 export const UPDATE_DIALOG_TITLE_TEXT = 'Firmware Update';
 export const FIRMWARE_NEED_UPDATE = 'Need Update!';
@@ -53,7 +53,8 @@ export const PATTERN_CIRCLE = [
 ];
 
 // Accident
-export const ACCIDENT_ALERT_TOGGLE = 'Accident Alert';
+export const ACCIDENT_ALERT_ON = 'Alert ON';
+export const ACCIDENT_ALERT_OFF = 'Alert OFF';
 export const ACCIDENT_ALERT_INFO = `If accidents occur, our app notifies to emergency contacts which you saved in the app.`;
 export const ACCIDENT_SENSITIVITY_LABEL = 'Sensitivity Level';
 export const ACCIDENT_SENSITIVITY_INFO = `The behavior of the accident detection system is changed by selected sensitivity level.\nPlease choose carefully.`;

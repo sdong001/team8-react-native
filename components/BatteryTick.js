@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import BatteryIcon from '../public/icon/BatteryIcon';
+
 import { View } from 'native-base';
 
 import Homer from '../public/image/Homer';
@@ -14,23 +16,10 @@ class BatteryTick extends Component {
 		tick: PropTypes.number.isRequired,
 	}
 
-
 	render() {
-		let batteryTickImg;
-
-		if( this.props.tick == 0 ) {
-			batteryTickImg = <Homer />;
-		} else if ( this.props.tick == 1 ) {
-			batteryTickImg = <View></View>;
-		} else if ( this.props.tick == 2 ) {
-			batteryTickImg = <View></View>;
-		} else if ( this.props.tick == 3 ) {
-			batteryTickImg = <View></View>;
-		}
-
 		return (
 			<View>
-				{batteryTickImg}
+				<BatteryIcon number={this.props.tick} />
 			</View>
 		);
 	}

@@ -6,7 +6,7 @@ import { TouchableOpacity, StyleSheet } from 'react-native';
 
 import { vCenterRow } from '../style/common';
 
-import NumbericIcon from '../public/image/NumbericIcon';
+import NumbericIcon from '../public/icon/NumbericIcon';
 
 class NumbericRadioBtnsView extends Component {
 
