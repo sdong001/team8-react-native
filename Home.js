@@ -17,7 +17,7 @@ import BatteryTick from './components/BatteryTick';
 
 import { COLOR_PRIMARY, COLOR_SECONDARY, COLOR_PRIMARY_DARK, COLOR_PRIAMRY_LIGHT,
  	DIALOG_OK, DIALOG_CLOSE,
-	APP_NAME, AUTO_CONNECT, DISCOVERABLE, LIGHT_ON, LIGHT_OFF,
+	APP_NAME, AUTO_CONNECT, DISCOVERABLE, LIGHT_ON, LIGHT_OFF, GROUP_SYNC_ON, GROUP_SYNC_OFF,
 	HOME_LIGHT_PATTERN, HOME_GROUP_SYNC, HOME_ACCIDENT_ALERT, HOME_FIRMWARE_UPDATE, FIRMWARE_NEED_UPDATE,
 	FIRMWARE_UPDATE_VER, FIRMWARE_CURRENT_VER, FIRMWARE_UPDATE_WAITING,
 	flexColumn, flexRow, vCenterRow, spaceComponent }
@@ -28,6 +28,8 @@ import MainAccident from './public/icon/MainAccident';
 import MainGroup from './public/icon/MainGroup';
 import LightOn from './public/icon/LightOn';
 import LightOff from './public/icon/LightOff';
+import Discoverable from './public/icon/Discoverable';
+import Autoconnect from './public/icon/Autoconnect';
 
 const deviceSize = Dimensions.get('window');
 
@@ -51,6 +53,8 @@ class Home extends Component {
 			updateVersion: '00.01', // be set from device
 			currentVersion: '00.00', // be set from device
 			batteryTick: 7, // be set from device
+			groupSyncState: GROUP_SYNC_OFF,
+			groupSyncBkg: COLOR_SECONDARY,
 		};
 
 		this.goToPattern.bind(this);
@@ -127,19 +131,18 @@ class Home extends Component {
 						<CardItem style={{justifyContent:"space-between", backgroundColor: COLOR_PRIMARY}}>
 							<Grid>
 								<Col size={3}>
-									<Item style={{backgroundColor: COLOR_SECONDARY, borderColor: COLOR_SECONDARY}}regular>
+									<Item style={{backgroundColor: COLOR_SECONDARY, borderColor: COLOR_SECONDARY}} regular>
 										<Input style={styles.deviceInput} />
 										<Icon style={[spaceComponent, {color: 'white', backgroundColor: COLOR_SECONDARY}]}
 											name="md-create" />
 									</Item>
 									<Grid style={{marginLeft: 10, marginTop: 5}}>
-										<Row>
-											<Icon style={spaceComponent}
-												name="md-create" />
+										<Row style={{alignItems: 'center'}}>
+											<Autoconnect />
 											<Col style={vCenterRow}>
 												<Text style={styles.bluetoothOptionsText}>{AUTO_CONNECT}</Text>
 											</Col>
-											<Col style={vCenterRow}>
+											<Col style={[vCenterRow, {justifyContent: 'flex-end'}]}>
 												<Switch value={this.state.autoConnectToggle}
 													onValueChange={
 														(value) => {
@@ -149,13 +152,12 @@ class Home extends Component {
 											</Col>
 										</Row>
 
-										<Row>
-											<Icon style={spaceComponent}
-												name="md-create" />
+										<Row style={{alignItems: 'center'}}>
+											<Discoverable />
 											<Col style={vCenterRow}>
 												<Text style={styles.bluetoothOptionsText}>{DISCOVERABLE}</Text>
 											</Col>
-											<Col style={vCenterRow}>
+											<Col style={[vCenterRow, {justifyContent: 'flex-end'}]}>
 												<Switch value={this.state.discoverableToggle}
 													onValueChange={
 														(value) => {
@@ -166,7 +168,7 @@ class Home extends Component {
 										</Row>
 									</Grid>
 								</Col>
-								<Col size={1}>
+								<Col size={1} style={{paddingLeft: 10}}>
 									<View style={{alignItems: 'center'}}>
 										<BatteryTick tick={this.state.batteryTick} />
 									</View>
@@ -230,39 +232,30 @@ class Home extends Component {
 								</TouchableOpacity>
 							</Col>
 							<Col>
-								<View style={{paddingBottom: 5}}>
-									<Card style={styles.container}>
-										<CardItem style={styles.cardItem}>
-											<View style={[flexColumn, {alignItems: 'center'}]}>
-												<MainGroup />
-											</View>
-										</CardItem>
-										<CardItem style={[flexColumn, styles.cardItem]}>
-											<Grid style={[{alignItems: 'center'}]}>
-												<Row>
-													<Text style={[styles.cardTitle, {height:50}]}>{HOME_GROUP_SYNC}</Text>
-												</Row>
-												<Row>
-													<Switch style={{marginTop: 40}} value={this.state.lightSync}
-														onValueChange={
-															(value) => {
-																this.setState({
-																	lightSync: value
-																});
-															}
-														} />
-												</Row>
-											</Grid>
-											<View style={flexRow}>
-
-											</View>
-											<View style={flexRow}>
-
-
-											</View>
-										</CardItem>
-									</Card>
-								</View>
+								<TouchableOpacity onPress={() => {
+									let changeSyncState = this.state.groupSyncState == GROUP_SYNC_ON ? GROUP_SYNC_OFF : GROUP_SYNC_ON;
+									let cahngeSyncBkg = this.state.groupSyncState == GROUP_SYNC_ON ? COLOR_SECONDARY : COLOR_PRIMARY;
+									this.setState({
+										groupSyncState: changeSyncState,
+										groupSyncBkg: cahngeSyncBkg,
+									});
+								}} activeOpacity={1}>
+									<View style={{paddingBottom: 5}}>
+										<Card style={[styles.container, {backgroundColor: this.state.groupSyncBkg}]}>
+											<CardItem style={[styles.cardItem, {backgroundColor: this.state.groupSyncBkg}]}>
+												<View style={[flexColumn, {alignItems: 'center'}]}>
+													<MainGroup />
+												</View>
+											</CardItem>
+											<CardItem style={[styles.cardItem, {backgroundColor: this.state.groupSyncBkg}]}>
+												<View style={[flexRow, {justifyContent: 'center'}]}>
+													<Text style={styles.cardTitle}>{HOME_GROUP_SYNC}</Text>
+													<Text style={[styles.groupToggleText, {marginLeft:10}]}>{this.state.groupSyncState}</Text>
+												</View>
+											</CardItem>
+										</Card>
+									</View>
+								</TouchableOpacity>
 							</Col>
 						</Row>
 						<Row>
@@ -391,6 +384,12 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 	},
 
+	groupToggleText: {
+		fontSize: 25,
+		color: '#ffd460',
+		fontWeight: 'bold'
+	},
+
 	firmwareTitle: {
 		fontSize: 20,
 		color: 'white',
@@ -419,6 +418,7 @@ const styles = StyleSheet.create({
 	},
 
 	bluetoothOptionsText : {
+		margin: 5,
 		fontSize: 18,
 		color: 'white'
 	},
