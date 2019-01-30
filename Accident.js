@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Platform, PermissionsAndroid, StyleSheet, Alert, Switch } from 'react-native'
+import { Platform, PermissionsAndroid, StyleSheet, Alert, Switch, TouchableOpacity } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 
 import { View, Container, Content,
@@ -97,44 +97,61 @@ class Accident extends Component {
 		return (
 			<Container>
 				<Content padder>
+					<TouchableOpacity onPress={
+						() => {
+							let changeToggle = !this.state.alertToggle;
+							let accChange = this.state.alertToggle ? ACCIDENT_ALERT_OFF : ACCIDENT_ALERT_ON;
+							const changeBkg = this.state.alertToggle ? COLOR_PRIMARY : 'white';
+							const changeBorder = this.state.alertToggle ? COLOR_PRIMARY : COLOR_PRIAMRY_LIGHT;
+							const changeTextColor = this.state.alertToggle ? 'white' : 'black';
 
-					<Card>
-						<CardItem style={{justifyContent:"space-between", backgroundColor: this.state.alertCardBkg, borderWidth: 2, borderColor: this.state.alertCardBorder}}>
-							<Left style={{marginLeft: 10}}>
-								{this.state.alertToggle &&
-									<Icon style={{color: '#ffd460'}}
-										name="md-notifications" />
-								}
-								{!this.state.alertToggle &&
-									<Icon style={{color: '#ffd460'}}
-										name="md-notifications-off" />
-								}
-							</Left>
-							<Right>
-								<View style={[flexRow, {alignItems: 'center'}]}>
-									<Text style={[styles.cardTitle, {color: this.state.alertTextColor, marginRight: 25}]}>{this.state.alertState}</Text>
-									<Switch value={this.state.alertToggle}
-										style={{ transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] }}
-										onValueChange={
-											(value) => {
-												let accChange = this.state.alertToggle ? ACCIDENT_ALERT_OFF : ACCIDENT_ALERT_ON;
-												const changeBkg = this.state.alertToggle ? COLOR_PRIMARY : 'white';
-												const changeBorder = this.state.alertToggle ? COLOR_PRIMARY : COLOR_PRIAMRY_LIGHT;
-												const changeTextColor = this.state.alertToggle ? 'white' : 'black';
+							this.setState({
+								alertToggle: changeToggle,
+								alertState: accChange,
+								alertCardBkg: changeBkg,
+								alertCardBorder: changeBorder,
+								alertTextColor: changeTextColor
+							});
+						}
+					} activeOpacity={1}>
+						<Card>
+							<CardItem style={{justifyContent:"space-between", backgroundColor: this.state.alertCardBkg, borderWidth: 2, borderColor: this.state.alertCardBorder}}>
+								<Left style={{marginLeft: 10}}>
+									{this.state.alertToggle &&
+										<Icon style={{color: '#ffd460'}}
+											name="md-notifications" />
+									}
+									{!this.state.alertToggle &&
+										<Icon style={{color: '#ffd460'}}
+											name="md-notifications-off" />
+									}
+								</Left>
+								<Right>
+									<View style={[flexRow, {alignItems: 'center'}]}>
+										<Text style={[styles.cardTitle, {color: this.state.alertTextColor, marginRight: 25}]}>{this.state.alertState}</Text>
+										<Switch value={this.state.alertToggle}
+											style={{ transform: [{ scaleX: 1.0 }, { scaleY: 1.0 }] }}
+											onValueChange={
+												(value) => {
+													let accChange = this.state.alertToggle ? ACCIDENT_ALERT_OFF : ACCIDENT_ALERT_ON;
+													const changeBkg = this.state.alertToggle ? COLOR_PRIMARY : 'white';
+													const changeBorder = this.state.alertToggle ? COLOR_PRIMARY : COLOR_PRIAMRY_LIGHT;
+													const changeTextColor = this.state.alertToggle ? 'white' : 'black';
 
-												this.setState({
-													alertToggle: value,
-													alertState: accChange,
-													alertCardBkg: changeBkg,
-													alertCardBorder: changeBorder,
-													alertTextColor: changeTextColor
-												});
-											}
-										} />
-								</View>
-							</Right>
-						</CardItem>
-					</Card>
+													this.setState({
+														alertToggle: value,
+														alertState: accChange,
+														alertCardBkg: changeBkg,
+														alertCardBorder: changeBorder,
+														alertTextColor: changeTextColor
+													});
+												}
+											}/>
+									</View>
+								</Right>
+							</CardItem>
+						</Card>
+					</TouchableOpacity>
 
 					<Text style={{marginTop: 10, marginBottom: 25}}>
 						{ACCIDENT_ALERT_INFO}
@@ -154,19 +171,19 @@ class Accident extends Component {
 						<CardItem style={{backgroundColor: COLOR_PRIAMRY_LIGHT}}>
 							<Grid>
 								{levels.map((item, idx) => (
-									<Row style={styles.levelContainer}>
-										<Radio onPress={() => {
-											if( this.state.curLevel != idx ) {
-												let changeSeleted = this.state.levelRadioSelected;
-												changeSeleted[idx] = true;
-												changeSeleted[this.state.curLevel] = false;
+									<Row style={styles.levelContainer} onPress={() => {
+										if( this.state.curLevel != idx ) {
+											let changeSeleted = this.state.levelRadioSelected;
+											changeSeleted[idx] = true;
+											changeSeleted[this.state.curLevel] = false;
 
-												this.setState({
-													levelRadioSelected : changeSeleted,
-													curLevel: idx,
-												});
-											}
-										}}
+											this.setState({
+												levelRadioSelected : changeSeleted,
+												curLevel: idx,
+											});
+										}
+									}}>
+										<Radio
 										selected={this.state.levelRadioSelected[idx]} color='white' selectedColor={COLOR_SECONDARY} />
 										<Left style={styles.levelText}>
 											<Text style={[styles.levelTitle, {alignSelf: 'flex-start'}]}>{item.level}</Text>
@@ -216,22 +233,31 @@ class Accident extends Component {
 							{this.state.contacts.map((item, idx) => {
 								let checkBoxColor = item.checked ? COLOR_SECONDARY : 'white';
 								return (
-									<View style={styles.contactsItem} >
-										<Left style={flexRow}>
-											<CheckBox checked={item.checked} style={{marginRight: 25}} color={checkBoxColor} onPress={() => {
-												let changeContacts = this.state.contacts;
-												changeContacts[idx].checked = !item.checked;
+									<TouchableOpacity style={flexRow}  onPress={() => {
+										let changeContacts = this.state.contacts;
+										changeContacts[idx].checked = !item.checked;
 
-												this.setState({
-													contacts: changeContacts
-												});
-											}} />
-											<Text style={styles.contactText}>{item.name}</Text>
-										</Left>
-										<Right>
-											<Text style={[styles.contactText, {marginRight: 50}]}>{item.number}</Text>
-										</Right>
-									</View>
+										this.setState({
+											contacts: changeContacts
+										});
+									}} activeOpacity={1}>
+										<View style={styles.contactsItem} >
+											<Left style={flexRow}>
+												<CheckBox checked={item.checked} style={{marginRight: 25}} color={checkBoxColor} onPress={() => {
+													let changeContacts = this.state.contacts;
+													changeContacts[idx].checked = !item.checked;
+
+													this.setState({
+														contacts: changeContacts
+													});
+												}} />
+												<Text style={styles.contactText}>{item.name}</Text>
+											</Left>
+											<Right>
+												<Text style={[styles.contactText, {marginRight: 50}]}>{item.number}</Text>
+											</Right>
+										</View>
+									</TouchableOpacity>
 								)
 							})}
 						</CardItem>

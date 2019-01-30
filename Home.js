@@ -177,40 +177,58 @@ class Home extends Component {
 						</CardItem>
 					</Card>
 
-					<Card>
-						<CardItem style={{justifyContent:"space-between", borderColor: this.state.lightBorder, borderWidth: 2, backgroundColor: this.state.lightBkg }}>
-							<Left style={{marginLeft: 30}}>
-								{this.state.lightToggle &&
-									<LightOn />
-								}
-								{!this.state.lightToggle &&
-									<LightOff />
-								}
-							</Left>
-							<Right style={flexColumn}>
-								<View style={[flexRow, {alignItems: 'center'}]}>
-									<Text style={[styles.lightStateText, {color: this.state.lightTextColor}]}>{this.state.lightState}</Text>
-									<Switch value={this.state.lightToggle}
-										onValueChange={
-											(value) => {
-												let lightChange = this.state.lightToggle ? LIGHT_OFF : LIGHT_ON;
-												const changeBkg = this.state.lightToggle ? COLOR_PRIMARY : 'white';
-												const changeBorder = this.state.lightToggle ? COLOR_PRIMARY : COLOR_PRIAMRY_LIGHT;
-												const changeTextColor = this.state.lightToggle ? 'white' : 'black';
+					<TouchableOpacity onPress={
+						() => {
+							let lightToggle = !this.state.lightToggle;
+							let lightChange = this.state.lightToggle ? LIGHT_OFF : LIGHT_ON;
+							const changeBkg = this.state.lightToggle ? COLOR_PRIMARY : 'white';
+							const changeBorder = this.state.lightToggle ? COLOR_PRIMARY : COLOR_PRIAMRY_LIGHT;
+							const changeTextColor = this.state.lightToggle ? 'white' : 'black';
 
-												this.setState({
-													lightToggle: value,
-													lightState: lightChange,
-													lightBkg: changeBkg,
-													lightBorder: changeBorder,
-													lightTextColor: changeTextColor
-												});
-											}
-										} />
-								</View>
-							</Right>
-						</CardItem>
-					</Card>
+							this.setState({
+								lightToggle: lightToggle,
+								lightState: lightChange,
+								lightBkg: changeBkg,
+								lightBorder: changeBorder,
+								lightTextColor: changeTextColor
+							});
+						}
+					} activeOpacity={1}>
+						<Card>
+							<CardItem style={{justifyContent:"space-between", borderColor: this.state.lightBorder, borderWidth: 2, backgroundColor: this.state.lightBkg }}>
+								<Left style={{marginLeft: 30}}>
+									{this.state.lightToggle &&
+										<LightOn />
+									}
+									{!this.state.lightToggle &&
+										<LightOff />
+									}
+								</Left>
+								<Right style={flexColumn}>
+									<View style={[flexRow, {alignItems: 'center'}]}>
+										<Text style={[styles.lightStateText, {color: this.state.lightTextColor}]}>{this.state.lightState}</Text>
+										<Switch value={this.state.lightToggle}
+											onValueChange={
+											   (value) => {
+												   let lightChange = this.state.lightToggle ? LIGHT_OFF : LIGHT_ON;
+												   const changeBkg = this.state.lightToggle ? COLOR_PRIMARY : 'white';
+												   const changeBorder = this.state.lightToggle ? COLOR_PRIMARY : COLOR_PRIAMRY_LIGHT;
+												   const changeTextColor = this.state.lightToggle ? 'white' : 'black';
+
+												   this.setState({
+													   lightToggle: value,
+													   lightState: lightChange,
+													   lightBkg: changeBkg,
+													   lightBorder: changeBorder,
+													   lightTextColor: changeTextColor
+												   });
+											   }
+										   }/>
+									</View>
+								</Right>
+							</CardItem>
+						</Card>
+					</TouchableOpacity>
 					<Grid>
 						<Row>
 							<Col>
