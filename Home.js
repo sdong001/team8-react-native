@@ -168,7 +168,7 @@ class Home extends Component {
 										</Row>
 									</Grid>
 								</Col>
-								<Col size={1} style={{paddingLeft: 10}}>
+								<Col size={1}>
 									<View style={{alignItems: 'center'}}>
 										<BatteryTick tick={this.state.batteryTick} />
 									</View>

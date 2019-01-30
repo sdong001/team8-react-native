@@ -11,7 +11,7 @@ const Routes = () => (
 		<Router>
 			<Scene key = "root" navBarButtonColor='#003300' navigationBarStyle={{backgroundColor : '#011a30'}} barButtonIconStyle={{tintColor: 'white'}}>
 		  		<Scene key = "login" component = {Login} navTransparent initial = {true} />
-		  		<Scene key = "discover" component = {Discover} navTransparent />
+		  		<Scene key = "discover" component = {Discover} navTransparent type='replace' />
 				<Scene key = "home" component = {Home} navTransparent type = {ActionConst.RESET} />
 			 	<Scene key = "pattern" component = {Pattern} title = "Light & Pattern"
 					navBarButtonColor='#FFFFFF' titleStyle={{color: 'white'}} />
