@@ -213,24 +213,27 @@ class Accident extends Component {
 							</View>
 						</CardItem>
 						<CardItem style={[flexColumn, {backgroundColor: COLOR_PRIAMRY_LIGHT}]}>
-							{this.state.contacts.map((item, idx) => (
-								<View style={styles.contactsItem} >
-									<Left style={flexRow}>
-										<CheckBox checked={item.checked} style={{marginRight: 25}} color={COLOR_SECONDARY} onPress={() => {
-											let changeContacts = this.state.contacts;
-											changeContacts[idx].checked = !item.checked;
+							{this.state.contacts.map((item, idx) => {
+								let checkBoxColor = item.checked ? COLOR_SECONDARY : 'white';
+								return (
+									<View style={styles.contactsItem} >
+										<Left style={flexRow}>
+											<CheckBox checked={item.checked} style={{marginRight: 25}} color={checkBoxColor} onPress={() => {
+												let changeContacts = this.state.contacts;
+												changeContacts[idx].checked = !item.checked;
 
-											this.setState({
-												contacts: changeContacts
-											});
-										}} />
-										<Text style={styles.contactText}>{item.name}</Text>
-									</Left>
-									<Right>
-										<Text style={[styles.contactText, {marginRight: 50}]}>{item.number}</Text>
-									</Right>
-								</View>
-							))}
+												this.setState({
+													contacts: changeContacts
+												});
+											}} />
+											<Text style={styles.contactText}>{item.name}</Text>
+										</Left>
+										<Right>
+											<Text style={[styles.contactText, {marginRight: 50}]}>{item.number}</Text>
+										</Right>
+									</View>
+								)
+							})}
 						</CardItem>
 					</Card>
 					<Dialog
