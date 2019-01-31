@@ -1,4 +1,4 @@
-package com.awesomeproject;
+package com.teameight.reactapp;
 
 import android.app.Application;
 
