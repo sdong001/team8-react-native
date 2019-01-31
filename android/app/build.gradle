@@ -137,8 +137,6 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-nordic-dfu')
-    compile project(':react-native-ble-plx')
     compile project(':react-native-vector-icons')
     compile project(':react-native-svg')
     implementation fileTree(dir: "libs", include: ["*.jar"])
