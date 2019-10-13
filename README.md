@@ -1,6 +1,6 @@
-# TEAM EIGHT
+# TEAM EIGHT RN APP (UI Mock)
 - 2018-12 ~ 2019-01
-- 자전거, 이륜차 안전주행을 주제로 BLE 기기와 통신가능한 React Native App
+- 자전거, 이륜차 안전주행을 주제로 BLE 기기와 통신가능한 App
 - 주요 기능
   - 디바이스로 부터 센서 값을 전달받아 사고 인지 후 대응
   - 디바이스 led pattern 설정
